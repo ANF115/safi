@@ -32,3 +32,10 @@
 ```
 php artisan serve
 ```
+
+[*__Bases de Datos__*](https://laravel.com/docs/9.x/database)
+
+*__Migrar__*
+```
+php artisan migrate
+```
