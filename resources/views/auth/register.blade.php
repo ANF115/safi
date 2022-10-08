@@ -10,7 +10,30 @@
             @csrf
 
             <div>
-                <x-jet-label for="name" value="{{ __('Name') }}" />
+                <x-jet-label for="nombre_empresa" value="{{ __('Nombre Empresa') }}" />
+                <x-jet-input id="nombre_empresa" class="block mt-1 w-full" type="text" name="nombre_empresa" :value="old('nombre_empresa')" required  />
+            </div>
+
+            <div>
+                <x-jet-label for="rubro_id" value="{{ __('Rubro de la Empresa') }}" />
+                <select name="rubro_id" id="rubro_id " class=" block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                                <option value="1">Rubro 1</option>
+                                <option value="2">Rubro 2</option>
+                                <option value="3">Rubro 3</option>
+                                <option value="4">Rubro 4</option>
+                                <option value="5">Rubro 5</option>
+                               
+                               
+                                
+                               
+                        </select>
+                
+            </div>
+
+
+            <div>
+                <br>
+                <x-jet-label for="name" value="{{ __('Nombre Usuario') }}" />
                 <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             </div>
 
@@ -48,11 +71,11 @@
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
+                    {{ __('Ya estas registrado?') }}
                 </a>
 
                 <x-jet-button class="ml-4">
-                    {{ __('Register') }}
+                    {{ __('Registrar') }}
                 </x-jet-button>
             </div>
         </form>

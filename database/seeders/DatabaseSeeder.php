@@ -17,7 +17,9 @@ class DatabaseSeeder extends Seeder
         // cada vez que se cree un nuevo seeder se tiene que agregar aca
         $this->call([
             RoleSeeder::class,
-            UserSeeder::class
+            RubroSeeder::class,
+            UserSeeder::class,
+            
             
         ]);
     }
