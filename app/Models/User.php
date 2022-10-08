@@ -24,10 +24,24 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
+        'nombre_empresa',
+        'rubro_id',
         'name',
+        'role_id',
         'email',
         'password',
     ];
+
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function rubro()
+    {
+        return $this->belongsTo(Rubro::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

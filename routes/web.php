@@ -26,3 +26,12 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+
+/* -------------- VISTAS DEL ADMIN---------------------- */
+Route::middleware(['auth', 'isAdmin'])->group(function () {
+
+   /* Route::view('/registrarDatos', 'registro.registrar')->name('registrar');*/
+
+});
+

@@ -15,12 +15,17 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre_empresa');
+            $table->unsignedBigInteger('rubro_id');
+            $table->foreign('rubro_id')->references('id')->on('rubros');
             $table->string('name');
+            $table->unsignedBigInteger('role_id')->default('2');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
+            $table->foreign('role_id')->references('id')->on('roles');
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
@@ -36,3 +41,5 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
+
+
