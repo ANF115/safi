@@ -1,8 +1,10 @@
 <x-guest-layout>
+    
     <x-jet-authentication-card>
-        <x-slot name="logo">
+        <!--<x-slot name="logo">
             <x-jet-authentication-card-logo />
-        </x-slot>
+        </x-slot>-->
+        
 
         <x-jet-validation-errors class="mb-4" />
 
@@ -13,15 +15,17 @@
                 <x-jet-label for="nombre_empresa" value="{{ __('Nombre Empresa') }}" />
                 <x-jet-input id="nombre_empresa" class="block mt-1 w-full" type="text" name="nombre_empresa" :value="old('nombre_empresa')" required  />
             </div>
-
+            <br>
             <div>
                 <x-jet-label for="rubro_id" value="{{ __('Rubro de la Empresa') }}" />
                 <select name="rubro_id" id="rubro_id " class=" block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                                <option value="1">Rubro 1</option>
-                                <option value="2">Rubro 2</option>
-                                <option value="3">Rubro 3</option>
-                                <option value="4">Rubro 4</option>
-                                <option value="5">Rubro 5</option>
+                                <option value="">Escoja el rubro</option>
+                                @foreach (\App\Models\Rubro::all() as $rubro)
+                                <option value="{{ $rubro->id }}">
+                                    {{ $rubro->name }}
+
+                                </option>
+                                @endforeach
                                
                                
                                 
@@ -78,6 +82,12 @@
                     {{ __('Registrar') }}
                 </x-jet-button>
             </div>
+            <br>
         </form>
     </x-jet-authentication-card>
 </x-guest-layout>
+
+<style>
+
+
+</style>
