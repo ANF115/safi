@@ -13,8 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
+    
+});
+
+Route::get('/index', function () {
+    return view('index');
+    
 });
 
 Route::middleware([
@@ -34,4 +40,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
    /* Route::view('/registrarDatos', 'registro.registrar')->name('registrar');*/
 
 });
+
+
+
 
