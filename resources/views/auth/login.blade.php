@@ -50,11 +50,6 @@
         </form>
         
     </x-jet-authentication-card>
-    <x-jet-button class="ml-4" >
-        <a  href="{{ route('index') }}">
-                        {{ __('Regresar') }}
-        </a>
-                    
-     </x-jet-button>
+    
 
 </x-guest-layout>
