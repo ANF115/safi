@@ -18,8 +18,8 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'nombre_empresa' => 'UES',
-            'rubro_id' => 1, 
+            'nombre_empresa'=>"UES",
+            'rubro_id'=>1,
             'role_id' => 1, 
             'name' => 'Diego',            
             'email' => 'admin1@email.com',
@@ -29,8 +29,8 @@ class UserSeeder extends Seeder
 
 
         DB::table('users')->insert([
-            'nombre_empresa' => 'UES',
-            'rubro_id' => 1, 
+            'nombre_empresa'=>"UES",
+            'rubro_id'=>1,
             'role_id' => 1, 
             'name' => 'Carolina',            
             'email' => 'admin2@email.com',
@@ -39,8 +39,8 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'nombre_empresa' => 'UES',
-            'rubro_id' => 1, 
+            'nombre_empresa'=>"UES",
+            'rubro_id'=>1,
             'role_id' => 1, 
             'name' => 'Andrea',
             'email' => 'admin3@email.com',
@@ -48,8 +48,8 @@ class UserSeeder extends Seeder
             
         ]);
         DB::table('users')->insert([
-            'nombre_empresa' => 'UES',
-            'rubro_id' => 1, 
+            'nombre_empresa'=>"UES",
+            'rubro_id'=>1,
             'role_id' => 1, 
             'name' => 'Ronald',
             'email' => 'admin4@email.com',
@@ -58,8 +58,8 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'nombre_empresa' => 'UES',
-            'rubro_id' => 1, 
+            'nombre_empresa'=>"UES",
+            'rubro_id'=>1,
             'role_id' => 1, 
             'name' => 'Monica',
             'email' => 'admin5@email.com',

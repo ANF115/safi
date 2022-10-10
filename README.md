@@ -31,7 +31,17 @@
 *__Servir Aplicación__*
 ```
 php artisan serve
+
 ```
+### * Comando para hacer modelos y crear migracion de una vez de ese modelo*
+php artisan make:model Categoria -m
+
+### * Comando para hacer componentes, si se quiere agregar otro componente a Categoria se pondra Categoria/Eliminar *
+php artisan make:livewire Categoria/agregar
+
+### * Comando para hacer seeder del modelo osea datos de llenado o de prueba*
+php artisan make:seed CategoriaSeeder
+
 
 [*__Bases de Datos__*](https://laravel.com/docs/9.x/database)
 

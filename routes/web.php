@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,15 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/welcome', function () {
+Route::get('/', function () {
     return view('welcome');
     
 });
 
-Route::get('/index', function () {
-    return view('index');
-    
-});
+
 
 Route::middleware([
     'auth:sanctum',
@@ -31,7 +29,14 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+   
 });
+
+
+
+   
+
 
 
 /* -------------- VISTAS DEL ADMIN---------------------- */
@@ -40,6 +45,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
    /* Route::view('/registrarDatos', 'registro.registrar')->name('registrar');*/
 
 });
+
+/* -------------- VISTAS DEL ADMIN---------------------- */
+Route::middleware(['auth', 'isUser'])->group(function () {
+
+   /* Route::view('/registrarDatos', 'registro.registrar')->name('registrar');*/
+ 
+ });
 
 
 

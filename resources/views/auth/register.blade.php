@@ -10,29 +10,31 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
+                <div>
+                    
+                    <x-jet-input id="nombre_empresa" class="block mt-1 w-full" type="text" placeholder="Nombre de la Empresa" name="nombre_empresa" :value="old('nombre_empresa')"  wire:model="nombre_empresa" />
+                   
+                </div>
+                <br>
+                <div>
+                    
+                    <select name="rubro_id" id="rubro_id " class=" block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" wire:model="rubro_id">
+                                    <option value="">Rubro de la empresa</option>
+                                    @foreach (\App\Models\Rubro::all() as $rubro)
+                                    <option value="{{ $rubro->id }}">
+                                        {{ $rubro->name }}
 
-            <div>
-                
-                <x-jet-input id="nombre_empresa" class="block mt-1 w-full" type="text" placeholder="Nombre de la Empresa" name="nombre_empresa" :value="old('nombre_empresa')" required   />
-            </div>
-            <br>
-            <div>
-                
-                <select name="rubro_id" id="rubro_id " class=" block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                                <option value="">Rubro de la empresa</option>
-                                @foreach (\App\Models\Rubro::all() as $rubro)
-                                <option value="{{ $rubro->id }}">
-                                    {{ $rubro->name }}
-
-                                </option>
-                                @endforeach
-                               
-                               
+                                    </option>
+                                    @endforeach
                                 
-                               
-                </select>
-                
-            </div>
+                                
+                                    
+                                
+                    </select>
+                  
+                    
+                </div>
+            
 
 
             <div>
