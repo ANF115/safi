@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,14 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+   
 });
+
+
+
+   
+
 
 
 /* -------------- VISTAS DEL ADMIN---------------------- */
@@ -37,6 +45,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
    /* Route::view('/registrarDatos', 'registro.registrar')->name('registrar');*/
 
 });
+
+/* -------------- VISTAS DEL ADMIN---------------------- */
+Route::middleware(['auth', 'isUser'])->group(function () {
+
+   /* Route::view('/registrarDatos', 'registro.registrar')->name('registrar');*/
+ 
+ });
 
 
 

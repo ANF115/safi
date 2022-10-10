@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('nombre_empresa');
             $table->unsignedBigInteger('rubro_id');
-            $table->foreign('rubro_id')->references('id')->on('rubros');
             $table->string('name');
             $table->unsignedBigInteger('role_id')->default('2');
             $table->string('email')->unique();
@@ -26,6 +25,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('rubro_id')->references('id')->on('rubros');
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
