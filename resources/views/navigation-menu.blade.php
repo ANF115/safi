@@ -13,9 +13,55 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Inicio') }}
                     </x-jet-nav-link>
                 </div>
+
+                <!-- Navigation Links ADMIN-->
+                @if (Auth::user()->role_id == 1)
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('listEmpresas') }}" :active="request()->routeIs('listEmpresas')">
+                            {{ __('Gestionar Empresas') }}
+                        </x-jet-nav-link>
+                    </div>
+
+                @endif
+
+                <!-- Navigation Links USERS-->
+                @if (Auth::user()->role_id == 2)
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-jet-nav-link href="{{ route('cargarEstados') }}" :active="request()->routeIs('cargarEstados')">
+                                {{ __('Cargar Estados Financieros') }}
+                            </x-jet-nav-link>
+                    </div>
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-jet-nav-link href="{{ route('configurarCuentas') }}" :active="request()->routeIs('configurarCuentas')">
+                                {{ __('Configuración de Cuentas') }}
+                            </x-jet-nav-link>
+                    </div>
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-jet-nav-link href="{{ route('analisisRatios') }}" :active="request()->routeIs('analisisRatios')">
+                                {{ __('Realizar Análisis Financiero') }}
+                            </x-jet-nav-link>
+                    </div>
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-jet-nav-link href="{{ route('comparacionEmpresas') }}" :active="request()->routeIs('comparacionEmpresas')">
+                                {{ __('Comparación de Empresas') }}
+                            </x-jet-nav-link>
+                    </div>
+
+
+
+                @endif
+
+
+
+
+
+
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">

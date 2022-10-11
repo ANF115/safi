@@ -42,14 +42,17 @@ Route::middleware([
 /* -------------- VISTAS DEL ADMIN---------------------- */
 Route::middleware(['auth', 'isAdmin'])->group(function () {
 
-   /* Route::view('/registrarDatos', 'registro.registrar')->name('registrar');*/
+   Route::view('/Lista-Empresas', 'gestionar.empresas')->name('listEmpresas');
 
 });
 
 /* -------------- VISTAS DEL ADMIN---------------------- */
 Route::middleware(['auth', 'isUser'])->group(function () {
 
-   /* Route::view('/registrarDatos', 'registro.registrar')->name('registrar');*/
+   Route::view('/Cargar-Estados', 'estados.cargar-estados')->name('cargarEstados');
+   Route::view('/Configuar-Cuentas', 'cuentas.configurar')->name('configurarCuentas');
+   Route::view('/Analisis-Ratios', 'analisis.analisis-ratios')->name('analisisRatios');
+   Route::view('/Comparacion-Empresas', 'analisis.comparacion-empresas')->name('comparacionEmpresas');
  
  });
 
