@@ -24,10 +24,7 @@ class AdminMiddleware
                 # code...
                 return $next($request);
             }
-            else{
-                Session::flash('message', "Acceso denegado, necesita otro permiso de usuario");
-                return redirect('/dashboard')->withErrors(['msg' => 'Acceso denegado, necesita otro permiso de usuario']);
-            }
+            
         }
         else {
             # code...

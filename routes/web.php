@@ -41,7 +41,7 @@ Route::middleware([
 
 /* -------------- VISTAS DEL ADMIN---------------------- */
 Route::middleware(['auth', 'isAdmin'])->group(function () {
-
+    
    Route::view('/Lista-Empresas', 'gestionar.empresas')->name('listEmpresas');
 
 });
