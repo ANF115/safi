@@ -124,7 +124,7 @@
 
     </svg>
     <main>
-        <div class="b-example-divider"></div>
+        
 
         <div class="container px-4 py-5 " id="hanging-icons">
             <div>
@@ -310,8 +310,7 @@
 
     <svg svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
       <symbol id="estados" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"/>
-      <path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 1.707V10.5a.5.5 0 0 1-1 0V1.707L5.354 3.854a.5.5 0 1 1-.708-.708l3-3z"/>
+      <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
       </symbol>
       <symbol id="comparacion" viewBox="0 0 16 16">
       <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
@@ -328,7 +327,7 @@
 
     </svg>
     <main>
-        <div class="b-example-divider"></div>
+        
 
         <div class="container px-4 py-5 " id="hanging-icons">
             <div>
@@ -344,9 +343,9 @@
                     <svg class="bi" width="5em" height="5em"><use xlink:href="#estados"/></svg>
                 </div>
                 <div>
-                    <h3 class="fs-2">Cargar Estados Financieros</h3>
+                    <h3 class="fs-2">Estados Financieros</h3>
                     <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-                    <a href="{{ route('cargarEstados') }}" class="btn btn-primary">
+                    <a href="{{ route('opcionesEstados') }}" class="btn btn-primary">
                     Consultar
                     </a>
                 </div>
