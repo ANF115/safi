@@ -26,8 +26,8 @@
                 <!-- Navigation Links USERS-->
                 @if (Auth::user()->role_id == 2)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <x-jet-nav-link href="{{ route('cargarEstados') }}" :active="request()->routeIs('cargarEstados')">
-                                {{ __('Cargar Estados Financieros') }}
+                            <x-jet-nav-link href="{{ route('opcionesEstados') }}" :active="request()->routeIs('opcionesEstados')">
+                                {{ __('Estados Financieros') }}
                             </x-jet-nav-link>
                     </div>
 
