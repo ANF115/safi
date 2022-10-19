@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('periodo_contables', function (Blueprint $table) {
+        Schema::create('periodo_subcuentas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('catalogo_id');
+            $table->unsignedBigInteger('subcuenta_id');
             $table->unsignedBigInteger('periodo_id');
            
-            $table->foreign('catalogo_id')->references('id')->on('catalogos');
+            $table->foreign('subcuenta_id')->references('id')->on('sub_cuentas');
             $table->foreign('periodo_id')->references('id')->on('periodos');
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('periodo_contables');
+        Schema::dropIfExists('periodo_subcuentas');
     }
 };

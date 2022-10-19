@@ -48,7 +48,8 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
 /* -------------- VISTAS DEL ADMIN---------------------- */
 Route::middleware(['auth', 'isUser'])->group(function () {
-
+   
+   Route::view('/Catálogo-Cuentas', 'catalogo.catalogo-manual')->name('catalogoCuentas'); 
    Route::view('/Opciones-Estados', 'estados.opciones-estados')->name('opcionesEstados');
    Route::view('/Cargar-Estados', 'estados.cargar-estados')->name('cargarEstados');
    Route::view('/Registrar-Estados', 'estados.registrar-estados')->name('registrarEstados');

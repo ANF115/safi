@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PeriodoContable extends Model
+class PeriodoSubcuenta extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'catalogo_id',
+        'subcuenta_id',
         'periodo_id',
     ];
-    public function catalogo()
+    public function subcuenta()
     {
-        return $this->belongsTo(Catalogo::class);
+        return $this->belongsTo(SubCuenta::class);
     }
     public function periodo()
     {
