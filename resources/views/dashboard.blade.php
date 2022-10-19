@@ -122,6 +122,7 @@
 
 
 
+
     </svg>
     <main>
         
@@ -322,6 +323,9 @@
       <symbol id="analisis" viewBox="0 0 16 16">
       <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5zm0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5h-1z"/>
       </symbol>
+      <symbol id="configurar" viewBox="0 0 16 16">
+      <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+      </symbol>
 
 
 
@@ -336,8 +340,24 @@
               
               <h2>Sistema de Análisis Financiero</h2>
           </div>
+
+
+         
             
             <div class="row g-4 py-5  ">
+                <div class="col d-flex align-items-start">
+                <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                    <svg class="bi" width="5em" height="5em"><use xlink:href="#cuentas"/></svg>
+                </div>
+                <div>
+                    <h3 class="fs-2">Catálogo de Cuentas</h3>
+                    <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                    <br>
+                    <a href="{{ route('catalogoCuentas') }}" class="btn btn-primary">
+                    Consultar
+                    </a>
+                </div>
+                </div>
                 <div class="col d-flex align-items-start">
                 <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
                     <svg class="bi" width="5em" height="5em"><use xlink:href="#estados"/></svg>
@@ -345,22 +365,12 @@
                 <div>
                     <h3 class="fs-2">Estados Financieros</h3>
                     <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                    <br>
                     <a href="{{ route('opcionesEstados') }}" class="btn btn-primary">
                     Consultar
                     </a>
                 </div>
-                </div>
-                <div class="col d-flex align-items-start">
-                <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                    <svg class="bi" width="5em" height="5em"><use xlink:href="#cuentas"/></svg>
-                </div>
-                <div>
-                    <h3 class="fs-2">Configurar Cuentas</h3>
-                    <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-                    <a href="{{ route('configurarCuentas') }}" class="btn btn-primary">
-                    Consultar
-                    </a>
-                </div>
+                
                 </div>
                 
                 
@@ -369,16 +379,35 @@
             <div class="row g-4  ">
                 <div class="col d-flex align-items-start">
                 <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                    <svg class="bi" width="5em" height="5em"><use xlink:href="#configurar"/></svg>
+                </div>
+                <div>
+                    <h3 class="fs-2">Configurar Cuentas</h3>
+                    <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                    <br>
+                    <a href="{{ route('configurarCuentas') }}" class="btn btn-primary">
+                    Consultar
+                    </a>
+                </div>
+                
+                </div>
+                <div class="col d-flex align-items-start">
+                <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
                     <svg class="bi" width="5em" height="5em"><use xlink:href="#analisis"/></svg>
                 </div>
                 <div>
                     <h3 class="fs-2">Realizar Análisis Financiero</h3>
                     <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                    <br>
                     <a href="{{ route('cargarEstados') }}" class="btn btn-primary">
                     Consultar
                     </a>
                 </div>
                 </div>
+                
+                
+            </div>
+            <div class="row g-4  py-5 row-cols-1 row-cols-lg-2">
                 <div class="col d-flex align-items-start">
                 <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
                     <svg class="bi" width="5em" height="5em"><use xlink:href="#comparacion"/></svg>
@@ -386,11 +415,13 @@
                 <div>
                     <h3 class="fs-2">Comparación de Empresas</h3>
                     <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                    <br>
                     <a href="{{ route('configurarCuentas') }}" class="btn btn-primary">
                     Consultar
                     </a>
                 </div>
                 </div>
+                
                 
                 
             </div>
