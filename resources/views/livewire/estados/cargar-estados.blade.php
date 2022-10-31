@@ -55,7 +55,7 @@
     .cargar-archivo{
         position: absolute;
         top:0px;
-        min-width: 10%;
+        max-width:100%;
         min-height: 10%;
         font-size: 50px;
         text-align: center;
