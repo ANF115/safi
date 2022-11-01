@@ -10,6 +10,7 @@ class SubCuenta extends Model
     use HasFactory;
     protected $fillable = [
         'cuenta_id',
+        'codigo_subcuenta',
         'nombre_subcuenta',
         'valor',
         

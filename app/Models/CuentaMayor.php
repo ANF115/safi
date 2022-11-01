@@ -10,6 +10,7 @@ class CuentaMayor extends Model
     use HasFactory;
     protected $fillable = [
         'catalogo_id',
+        'codigo_cuenta_mayor',
         'nombre_cuenta_mayor',
         
         

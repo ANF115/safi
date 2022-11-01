@@ -353,7 +353,7 @@
                     <h3 class="fs-2">Catálogo de Cuentas</h3>
                     <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
                     <br>
-                    <a href="{{ route('catalogoCuentas') }}" class="btn btn-primary">
+                    <a href="{{ route('catalogoRegistro') }}" class="btn btn-primary">
                     Consultar
                     </a>
                 </div>
