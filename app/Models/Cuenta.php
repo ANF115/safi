@@ -10,6 +10,7 @@ class Cuenta extends Model
     use HasFactory;
     protected $fillable = [
         'cuenta_mayor_id',
+        'codigo_cuenta',
         'nombre_cuenta',
         
         

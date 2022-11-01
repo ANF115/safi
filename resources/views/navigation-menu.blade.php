@@ -27,7 +27,7 @@
                 @if (Auth::user()->role_id == 2)
                     
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <x-jet-nav-link href="{{ route('catalogoCuentas') }}" :active="request()->routeIs('catalogoCuentas')">
+                            <x-jet-nav-link href="{{ route('catalogoRegistro') }}" :active="request()->routeIs('catalogoRegistro')">
                                 {{ __('Catálogo de Cuentas') }}
                             </x-jet-nav-link>
                     </div>
