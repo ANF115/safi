@@ -11,6 +11,7 @@ class RegistroCuentas extends Component
 {
     public $search,$cuenta_mayor_id,$nombre_cuenta,$codigo_cuenta,$selectedCuenta,$deleteCuenta_id;
 
+    public $edit_codigo_cuenta,$edit_nombre_cuenta,$edit_cuenta_mayor_id;
     protected $rules = [
 
         
@@ -63,18 +64,18 @@ class RegistroCuentas extends Component
         //dd($value);
         $this->clear();
         $this->selectedCuenta=Cuenta::find($value);
-        $this->cuenta_mayor_id = Cuenta::find($value)->cuenta_mayor_id;
-        $this->codigo_cuenta = Cuenta::find($value)->codigo_cuenta;
-        $this->nombre_cuenta = Cuenta::find($value)->nombre_cuenta;
+        $this->edit_cuenta_mayor_id = Cuenta::find($value)->cuenta_mayor_id;
+        $this->edit_codigo_cuenta = Cuenta::find($value)->codigo_cuenta;
+        $this->edit_nombre_cuenta = Cuenta::find($value)->nombre_cuenta;
         //dd($this->editname);
 
     }
     public function save_edit()
     {   $this->validate();
         $this->selectedCuenta->update([
-            'cuenta_mayor_id' => $this->cuenta_mayor_id,
-            'codigo_cuenta' => $this->codigo_cuenta,
-            'nombre_cuenta'=> $this->nombre_cuenta,
+            'cuenta_mayor_id' => $this->edit_cuenta_mayor_id,
+            'codigo_cuenta' => $this->edit_codigo_cuenta,
+            'nombre_cuenta'=> $this->edit_nombre_cuenta,
         ]);
         return session()->flash("success", "Se actualizo correctamente");
     }

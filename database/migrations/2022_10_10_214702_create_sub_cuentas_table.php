@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('sub_cuentas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('cuenta_id');
-            $table->string('codigo_subcuenta');
+            $table->string('codigo_subcuenta')->unique();
             $table->string('nombre_subcuenta');
             $table->decimal('valor')->nullable();
             $table->foreign('cuenta_id')->references('id')->on('cuentas');
