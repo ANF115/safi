@@ -10,7 +10,7 @@
     </head><br>
     <h1>Cargar Estados Financieros</h1><br>
     <div class="d-grid gap-2 col-6 mx-auto">
-        <button style="background-color:#5BA0FF; border:none" class="btn btn-primary" type="button" >
+        <a href="{{url('/downloads/EstadosFinancieros.xlsx')}}" download="EstadosFinancieros.xlsx" style="background-color:#5BA0FF; border:none" class="btn btn-primary"  >
                 <div class="container text-center">
                     <div class="row justify-content-md-center">
                         <div class="col col-lg-2">
@@ -19,11 +19,11 @@
                             </span>
                         </div>
                         <div class="col-md-auto">
-                            <a href="downloads/EstadosFinancieros.xlsx" download="EstadosFinancieros.xlsx" style="text-decoration:none;color:white">Descargar Formatos<br>Estados Financieros</a>
+                            <h5 style="color:white">Descargar Formatos<br>Estados Financieros</h5>
                         </div>
                     </div>
                 </div>
-        </button><br>
+        </a><br>
         <div class="input-group input-group-sm mb-3">
             <input type="text" placeholder="Año" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"></div>
             <div class="card border-primary" style="border-style:dashed;">
