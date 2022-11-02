@@ -10,6 +10,7 @@ use Livewire\WithPagination;
 class RegistroSubcuentas extends Component
 {
     public $search,$cuenta_id,$nombre_subcuenta,$codigo_subcuenta,$selectedSubCuenta,$deleteSubCuenta_id;
+    public $edit_cuenta_id,$edit_nombre_subcuenta,$edit_codigo_subcuenta;
     protected $rules = [
 
         'cuenta_id'=> 'required',
@@ -62,18 +63,18 @@ class RegistroSubcuentas extends Component
         //dd($value);
         $this->clear();
         $this->selectedSubCuenta=SubCuenta::find($value);
-        $this->cuenta_id = SubCuenta::find($value)->cuenta_id;
-        $this->codigo_subcuenta = SubCuenta::find($value)->codigo_subcuenta;
-        $this->nombre_subcuenta = SubCuenta::find($value)->nombre_subcuenta;
+        $this->edit_cuenta_id = SubCuenta::find($value)->cuenta_id;
+        $this->edit_codigo_subcuenta = SubCuenta::find($value)->codigo_subcuenta;
+        $this->edit_nombre_subcuenta = SubCuenta::find($value)->nombre_subcuenta;
         //dd($this->editname);
 
     }
     public function save_edit()
     {   $this->validate();
         $this->selectedSubCuenta->update([
-            'cuenta_id' => $this->cuenta_id,
-            'codigo_subcuenta' => $this->codigo_subcuenta,
-            'nombre_subcuenta'=> $this->nombre_subcuenta,
+            'cuenta_id' => $this->edit_cuenta_id,
+            'codigo_subcuenta' => $this->edit_codigo_subcuenta,
+            'nombre_subcuenta'=> $this->edit_nombre_subcuenta,
         ]);
         return session()->flash("success", "Se actualizo correctamente");
     }

@@ -4,14 +4,26 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">    
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.1.slim.js"integrity="sha256-tXm+sa1uzsbFnbXt8GJqsgi2Tw+m4BLGDof6eUPjbtk="crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.min.css">
-        
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-            
+         
+        <script>
+            $(document).on('click','#btn-editar',function(){
+
+                $('#editarModal').modal('show')
+            })
+        </script>
+        <script>
+            $(document).on('click','#btn-eliminar',function(){
+
+                $('#eliminarModal').modal('show')
+            })
+        </script>
         </head>
     
             <br>
@@ -53,11 +65,12 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            
                             <th scope="col">Código</th>
                             <th scope="col">Nombre</th>
                         
-                            <th scope="col">Cuenta Mayor</th>
+                            <th scope="col">Código Cuenta Mayor</th>
+                            <th scope="col">Nombre Cuenta Mayor</th>
                             <th scope="col">Acciones</th>
 
                         </tr>
@@ -65,20 +78,21 @@
            
 
                     <tbody>
-                        @foreach ($cuentas as $key => $value)
+                        @foreach ($cuentas as $value)
                         
                             <tr>
-                                    <th scope="row">{{ $key + 1 }}</th>
+                                    
                                     <td>{{ $value->codigo_cuenta }}</td>
                                     <td>{{ $value->nombre_cuenta }}</td>
-                                    <td>{{ $value->cuenta_mayor_id }}</td>
+                                    <td>{{ $value->cuenta_mayor->codigo_cuenta_mayor }}</td>
+                                    <td>{{ $value->cuenta_mayor->nombre_cuenta_mayor }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#exampleModal" data-whatever="@mdo"
+                                        <button type="button" class="btn btn-primary" id="btn-editar" data-toggle="modal"
+                                            data-target="#editarModal" data-whatever="@mdo"
                                             wire:click="edit({{ $value->id }})">Editar</button>
 
-                                        <button type="button" class="btn btn-danger" data-toggle="modal"
-                                        data-target="#exampleModal2"
+                                        <button type="button" class="btn btn-danger" id="btn-eliminar" data-toggle="modal"
+                                        data-target="#eliminarModal"
                                         wire:click="delete({{ $value->id  }})">Eliminar</button>
                                     </td>
 
@@ -107,12 +121,12 @@
              </div>
         </div>
         {{-- MODAL --}}
-        <div wire:ignore.self class="modal fade" id="exampleModal"  tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div wire:ignore.self class="modal fade" id="editarModal"  tabindex="-1" role="dialog"
+        aria-labelledby="editarModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Editando</h5>
+                        <h5 class="modal-title" id="editarModalLabel">Editando</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -122,19 +136,19 @@
                             
                             <div class="form-group">
                                 
-                                <input type="text" class="form-control" id="codigo_cuenta" placeholder="Código Cuenta" wire:model="codigo_cuenta" >
+                                <input type="text" class="form-control" id="edit_codigo_cuenta" placeholder="Código Cuenta" wire:model="edit_codigo_cuenta" >
                                 @error('name') <span class="mt-1 error">{{ $message }}</span> @enderror
                             </div>
                             
                             <div class="form-group">
                                 
-                                <input type="text" class="form-control" id="nombre_cuenta" placeholder="Nombre Cuenta " wire:model="nombre_cuenta" >
+                                <input type="text" class="form-control" id="edit_nombre_cuenta" placeholder="Nombre Cuenta " wire:model="edit_nombre_cuenta" >
                                 @error('name') <span class="mt-1 error">{{ $message }}</span> @enderror
                             </div>
                             <div class="form-group">
                             <label for="cuentam">Cuenta Mayor </label>
                             <br>
-                            <select name="cuentam" id="cuenm" wire:model="cuenta_mayor_id">
+                            <select name="cuentam" id="edit_cuenta_mayor_id" wire:model="edit_cuenta_mayor_id">
                                 
                                  @foreach ($cuentasmay as $cuentam)
                                     <option value="{{$cuentam->id}}" 
@@ -164,12 +178,12 @@
             </div>
         </div>
         <!-- Modal -->
-        <div wire:ignore.self class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div wire:ignore.self class="modal fade" id="eliminarModal" tabindex="-1" role="dialog"
+        aria-labelledby="eliminarModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete Confirm</h5>
+                        <h5 class="modal-title" id="eliminarModalLabel">Delete Confirm</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true close-btn">×</span>
                         </button>

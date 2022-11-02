@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 
 class RegistrarCmayores extends Component
 {
-    public $search,$nombre_cuenta_mayor,$catalogo_id,$codigo_cuenta_mayor,$deleteCuentaMayor_id,$selectedCuentaMayor;
+    public $search,$nombre_cuenta_mayor,$catalogo_id,$codigo_cuenta_mayor,$deleteCuentaMayor_id,$selectedCuentaMayor,$cuenta_mayor_id;
+    
+    public $edit_codigo_cuenta_mayor,$edit_nombre_cuenta_mayor;
 
     protected $rules = [
 
@@ -25,6 +27,7 @@ class RegistrarCmayores extends Component
 
     ];
     use WithPagination;
+
 
     public function render()
     {   $this->catalogos = Catalogo::all();
@@ -57,24 +60,28 @@ class RegistrarCmayores extends Component
         
     }
 
+    
+
     public function edit($value)
     {
         //dd($value);
         $this->clear();
         $this->selectedCuentaMayor=CuentaMayor::find($value);
-        $this->codigo_cuenta_mayor = CuentaMayor::find($value)->codigo_cuenta_mayor;
-        $this->nombre_cuenta_mayor = CuentaMayor::find($value)->nombre_cuenta_mayor;
+        $this->edit_codigo_cuenta_mayor = CuentaMayor::find($value)->codigo_cuenta_mayor;
+        $this->edit_nombre_cuenta_mayor= CuentaMayor::find($value)->nombre_cuenta_mayor;
         //dd($this->editname);
 
     }
+
     public function save_edit()
     {   $this->validate();
         $this->selectedCuentaMayor->update([
-            'codigo_cuenta_mayor' => $this->codigo_cuenta_mayor,
-            'nombre_cuenta_mayor'=> $this->nombre_cuenta_mayor,
+            'codigo_cuenta_mayor' => $this->edit_codigo_cuenta_mayor,
+            'nombre_cuenta_mayor'=> $this->edit_nombre_cuenta_mayor,
         ]);
         return session()->flash("success", "Se actualizo correctamente");
     }
+
     public function delete($value)
     {
         $this->deleteCuentaMayor_id = $value;
@@ -84,6 +91,10 @@ class RegistrarCmayores extends Component
         CuentaMayor::find($this->deleteCuentaMayor_id)->delete();
         return session()->flash("success", "Se elimino correctamente");
     }
+
+
+    
+   
 
 
 }
