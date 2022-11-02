@@ -35,7 +35,7 @@
 	"forwardPorts": [8000],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "npm install && npm run build && composer install",
+	"postCreateCommand": "npm install && npm run build && composer install && php artisan optimize",
 
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode"
