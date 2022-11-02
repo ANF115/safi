@@ -28,28 +28,36 @@
         <form wire:submit.prevent="save">
         <div class="input-group input-group-sm mb-3">
             <input type="number" placeholder="Año" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+           
         </div>
-        <div class="card border-primary" style="border-style:dashed;">
+        <div class="mb-3">
+            <label for="estadosFinancieros" class="form-label">Seleccionar Estados Financieros
+                <input type="file" wire:model="estadosFinancieros" class="form-control" accept=".xlsx" id="cargarEstadosFinancieros">
+            </label>
+            <div wire:loading wire:target="estadosFinancieros" class="valid-feedback fs-4">Cargando...</div>
+            @error('estadosFinancieros') <div class="error" >{{ $message }}</div> @enderror
+        </div>
+        <!-- <div class="card border-primary" style="border-style:dashed;" onclick="$('#cargarEstadosFinancieros').click()">
             <div class="card-body">
-                <div class="container text-center">
-                    <div class="row justify-content-md-center">
-                        <div class="col col-lg-2">
-                            <span style="font-size:40px; margin-top:8px" class="material-symbols-outlined">
-                                cloud_upload
-                            </span>
+                <div class="container text-center"> -->
+                    <!-- <label for="cargarEstadosFinancieros">
+                        <div class="row justify-content-md-center">
+                            <div class="col col-lg-2">
+                                <span style="font-size:40px; margin-top:8px" class="material-symbols-outlined">
+                                    cloud_upload
+                                </span>
+                            </div>
+                            <div class="col-md-auto d-flex align-items-center">
+                                <span id="mensajeCargarArchivo">Seleccione los estados financieros</span>
+                                <input type="file" wire:model="estadosFinancieros" accept=".xlsx" style="display:none" id="cargarEstadosFinancieros">
+                                <div wire:loading wire:target="estadosFinancieros">Cargando...</div>
+                                @error('estadosFinancieros') <span class="error">{{ $message }}</span> @enderror
+                            </div>
                         </div>
-                        <div class="col-md-auto">
-                            <!-- <p style="margin-top:20px ;">Seleccione o Arrastre los estados financieros</p> -->
-                            <div wire:loading wire:target="photo">Uploading...</div>
-                            <input type="file" wire:model="estadosFinancieros" accept=".xlsx">
-                            <!-- <input class="cargar-archivo" type="file" wire:model="estadosFinancieros" accept=".xlsx"> -->
-                            @error('estadosFinancieros') <span class="error">{{ $message }}</span> @enderror
-                        </div>
-                    </div>
-                </div>
+                    </label> -->
+                <!-- </div>
             </div>
-        </div> 
-        <br>
+        </div>  -->
         <div class="row justify-content-end">
             <div class="col-2">
                 <button type="submit" class="btn btn-success">Guardar</button>
@@ -60,7 +68,8 @@
 </div>
 </div>
 <style>
-    .cargar-archivo {
+
+    /* .cargar-archivo {
         position: absolute;
         top: 0px;
         max-width: 100%;
@@ -73,5 +82,5 @@
         background: rgb(255, 255, 255);
         cursor: inherit;
         display: block;
-    }
+    } */
 </style>
