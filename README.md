@@ -49,3 +49,7 @@ php artisan make:seed CategoriaSeeder
 ```
 php artisan migrate
 ```
+*__Crear links almacenamiento__*
+```
+php artisan storage:link
+```
