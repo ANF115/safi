@@ -16,19 +16,13 @@ class RegistroSubcuentas extends Component
         'cuenta_id'=> 'required',
         'codigo_subcuenta'=> 'required',
         'nombre_subcuenta'=> 'required',
-        
-        
-        
-        
-        
-
     ];
 
     use WithPagination;
     public function render()
     {
         $this->cuentas= Cuenta::all();
-        $this->subcuentas = SubCuenta::all();
+        /*$this->subcuentas = SubCuenta::all();*/
         $this->subcuentass= Cuenta::all();
         return view('livewire.cuentas.registro-subcuentas',[
             'subcuentas' => SubCuenta::where('nombre_subcuenta', 'like', '%' . $this->search . '%')->paginate(5),
@@ -58,10 +52,19 @@ class RegistroSubcuentas extends Component
         
     }
 
+    public function clear_edit()
+    {
+        $this->edit_cuenta_id = '';
+        $this->edit_codigo_subcuenta = '';
+        $this->edit_nombre_subcuenta = '';
+        
+        
+    }
+
     public function edit($value)
     {
         //dd($value);
-        $this->clear();
+        $this->clear_edit();
         $this->selectedSubCuenta=SubCuenta::find($value);
         $this->edit_cuenta_id = SubCuenta::find($value)->cuenta_id;
         $this->edit_codigo_subcuenta = SubCuenta::find($value)->codigo_subcuenta;
@@ -70,12 +73,18 @@ class RegistroSubcuentas extends Component
 
     }
     public function save_edit()
-    {   $this->validate();
+    {   $this->validate([
+        'edit_cuenta_id'=> 'required',
+        'edit_codigo_subcuenta'=> 'required',
+        'edit_nombre_subcuenta'=> 'required',
+
+        ]);
         $this->selectedSubCuenta->update([
             'cuenta_id' => $this->edit_cuenta_id,
             'codigo_subcuenta' => $this->edit_codigo_subcuenta,
             'nombre_subcuenta'=> $this->edit_nombre_subcuenta,
         ]);
+        $this->selectedSubCuenta->save();
         return session()->flash("success", "Se actualizo correctamente");
     }
     public function delete($value)
