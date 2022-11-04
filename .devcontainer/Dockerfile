@@ -10,7 +10,7 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 
 # Install PostgreSQL driver
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions pgsql pdo_pgsql
+RUN install-php-extensions pgsql pdo_pgsql gd zip
 ENV XDEBUG_MODE=off
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
