@@ -24,19 +24,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <th scope="row">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    </th>
-                        <td colspan="2">Mark</td>
-                        <td>
-                        <span class="material-symbols-outlined">more_vert</span>
-                        </td>
-                    </tr>
+                    @foreach ($periodos as $periodo)
+                        <tr>
+                        <th scope="row">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        </th>
+                            <td colspan="2">{{ $periodo->year }}</td>
+                            <td>
+                            <span class="material-symbols-outlined">more_vert</span>
+                            </td>
+                        </tr>
+                    @endforeach
                     <tr>
                 </tbody>
             </table>
-            <!-- Tabla para seleccionar los ratios a analizar -->
+            <!-- Tabla para seleccionar la gategoria  a analizar -->
             <table  class="table table-hover">
                 <thead class="table-primary">
                     <tr>
@@ -44,13 +46,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <th scope="row">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    </th>
-                        <td>Mark</td>
-                    </tr>
-                    <tr>
+                    @foreach ($categorias as $categoria)
+                        <tr>
+                        <th scope="row">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        </th>
+                            <td>{{ $categoria->nombre_categoria }}</td>
+                        </tr>
+                        <tr>
+                    @endforeach
                 </tbody>
             </table>
             <div class="d-grid gap-2 col-12 mx-auto">
