@@ -5,6 +5,9 @@ namespace App\Http\Livewire\Cuentas;
 use Livewire\Component;
 use App\Models\Cuenta;
 use App\Models\CuentaMayor;
+use App\Models\Catalogo;
+use Illuminate\Support\Facades\Auth;
+
 use Livewire\WithPagination;
 
 class RegistroCuentas extends Component
@@ -12,6 +15,8 @@ class RegistroCuentas extends Component
     public $search,$cuenta_mayor_id,$nombre_cuenta,$codigo_cuenta,$selectedCuenta,$deleteCuenta_id;
 
     public $edit_codigo_cuenta,$edit_nombre_cuenta,$edit_cuenta_mayor_id;
+
+    public $codem,$catalogos;
     
     protected $rules = [
         'cuenta_mayor_id'=> 'required',
@@ -23,8 +28,12 @@ class RegistroCuentas extends Component
 
     public function render()
     {   /*$this->cuentas= Cuenta::all();*/
+        $codem=Auth::user()->id;
+        $this->catalogos = Catalogo::firstWhere('empresa_id',$codem);
+        $this->cuentasmay= CuentaMayor::all()->where('catalogo_id',$this->catalogos->id);
+
         $this->cuentass= Cuenta::all();
-        $this->cuentasmay= CuentaMayor::all();
+        
         return view('livewire.cuentas.registro-cuentas',[
             'cuentas' => Cuenta::where('nombre_cuenta', 'like', '%' . $this->search . '%')->paginate(5),
         ]);

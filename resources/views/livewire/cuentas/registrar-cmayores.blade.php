@@ -23,14 +23,15 @@
                     <h2>Cuentas Mayor</h2>
 
                     <div class="col-sm">
+                   
                         <select class="form-select" aria-label="Default select example" wire:model="catalogo_id">
                             <option value="">Catálogo</option>
-                                @foreach ($catalogos as $catalogo)
-                                    <option value="{{ $catalogo->id }}">
-                                        {{ $catalogo->nombre_catalogo }}
+                                
+                                    <option value="{{ $catalogos->id }}">
+                                        {{ $catalogos->nombre_catalogo }}
 
                                     </option>
-                                @endforeach
+                                
                         </select>
                         @error('catalogo_id') <span class="mt-1 error">{{ $message }}</span> @enderror
                     </div>
@@ -60,33 +61,39 @@
                         <tr>
                             <th scope="col">Código</th>
                             <th scope="col">Nombre</th>
-                            <th scope="col">Catálogo ID</th>
+                            <th scope="col">Nombre Catálogo</th>
                             <th scope="col">Acciones</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($cuentasmay as $value)
+                        
+                     
+                            @foreach ($cuentasM as  $cuenta)
+                                
+                                    <tr>
+                                       
+                                        
+                                                <td>{{ $cuenta->codigo_cuenta_mayor }}</td>
+                                                <td>{{ $cuenta->nombre_cuenta_mayor }}</td>
+                                                <td>{{ $cuenta->catalogo->nombre_catalogo }}</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" id="btn-editar"
 
-                            <tr>
+                                                        data-bs-toggle="modal" data-bs-target="#editarModal"
+                                                        wire:click="edit({{ $cuenta->id }})">Editar</button>
+                                                    <button type="button" class="btn btn-danger" id="btn-eliminar"
+                                                        data-bs-toggle="modal" data-bs-target="#eliminarModal"
+                                                        wire:click="delete({{ $cuenta->id  }})">Eliminar</button>
+                                                </td>
+                                       
 
-
-                                    <td>{{ $value->codigo_cuenta_mayor }}</td>
-                                    <td>{{ $value->nombre_cuenta_mayor }}</td>
-                                    <td>{{ $value->catalogo_id }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary" id="btn-editar"
-
-                                            data-bs-toggle="modal" data-bs-target="#editarModal"
-                                            wire:click="edit({{ $value->id }})">Editar</button>
-                                        <button type="button" class="btn btn-danger" id="btn-eliminar"
-                                            data-bs-toggle="modal" data-bs-target="#eliminarModal"
-                                            wire:click="delete({{ $value->id  }})">Eliminar</button>
-                                    </td>
-
-                            </tr>
-                        @endforeach
-
+                                    </tr>
+                                
+                               
+                            @endforeach
+                        
+                       
                     </tbody>
                 </table>
                 {{ $cuentasmay->links() }}

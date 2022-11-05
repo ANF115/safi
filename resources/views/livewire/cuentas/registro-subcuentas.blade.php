@@ -106,7 +106,7 @@
                             
                     </div>
                     <div class="col-auto">
-                            <a href="{{ route('dashboard') }}" type="button" class="btn btn-success " >Siguiente</a>
+                            <a href="{{ route('dashboard') }}" type="button" class="btn btn-success " >Finalizar</a>
                     </div>
                     
                 </div>
