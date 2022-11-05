@@ -29,17 +29,8 @@ class RegistrarCmayores extends Component
     public function render()
     {   
         $codem=Auth::user()->id;
-        
-
         $this->catalogos = Catalogo::firstWhere('empresa_id',$codem);
-       
-        $this->cuentasM= CuentaMayor::all()->where('catalogo_id',$this->catalogos->id);
-        
-
-       
-
-
-       
+        $this->cuentasM= CuentaMayor::all()->where('catalogo_id',$this->catalogos->id);       
         return view('livewire.cuentas.registrar-cmayores',[
             'cuentasmay' => CuentaMayor::where('nombre_cuenta_mayor', 'like', '%' . $this->search . '%')->paginate(5),
         ]);
