@@ -351,7 +351,7 @@
                 </div>
                 <div>
                     <h3 class="fs-2">Catálogo de Cuentas</h3>
-                    <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                    <p>Podrá ingresar manualmente el Catálogo con las Cuentas Mayores, Cuentas y Subcuentas.</p>
                     <br>
                     <a href="{{ route('catalogoRegistro') }}" class="btn btn-primary">
                     Consultar
@@ -364,7 +364,7 @@
                 </div>
                 <div>
                     <h3 class="fs-2">Estados Financieros</h3>
-                    <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                    <p>Se podrá ingresar los estados financieros manualmente  ó cargar los estados utilizando una plantilla de excel.</p>
                     <br>
                     <a href="{{ route('opcionesEstados') }}" class="btn btn-primary">
                     Consultar
@@ -383,7 +383,7 @@
                 </div>
                 <div>
                     <h3 class="fs-2">Configurar Cuentas</h3>
-                    <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                    <p>Seleccionar las cuentas para el cálculo de los ratios.</p>
                     <br>
                     <a href="{{ route('configurarCuentas') }}" class="btn btn-primary">
                     Consultar
@@ -397,7 +397,7 @@
                 </div>
                 <div>
                     <h3 class="fs-2">Realizar Análisis Financiero</h3>
-                    <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                    <p>Se realiza el Análisis Financiero a traves de los ratios calculados. .</p>
                     <br>
                     <a href="{{ route('cargarEstados') }}" class="btn btn-primary">
                     Consultar
@@ -414,7 +414,7 @@
                 </div>
                 <div>
                     <h3 class="fs-2">Comparación de Empresas</h3>
-                    <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                    <p>Comparar el valor de mis ratios con el de otras empresas.</p>
                     <br>
                     <a href="{{ route('configurarCuentas') }}" class="btn btn-primary">
                     Consultar

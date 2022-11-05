@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('catalogos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('empresa_id');
+            $table->unsignedBigInteger('empresa_id')->unique();
             $table->string('nombre_catalogo');
             $table->foreign('empresa_id')->references('id')->on('users');
             $table->timestamps();

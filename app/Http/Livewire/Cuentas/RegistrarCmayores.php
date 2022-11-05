@@ -7,11 +7,14 @@ use App\Models\Catalogo;
 use App\Models\CuentaMayor;
 use Livewire\WithPagination;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RegistrarCmayores extends Component
 {
     public $search,$nombre_cuenta_mayor,$catalogo_id,$codigo_cuenta_mayor,$deleteCuentaMayor_id,$selectedCuentaMayor,$cuenta_mayor_id;
     public $edit_codigo_cuenta_mayor,$edit_nombre_cuenta_mayor;
+    public $codem,$catalogos;
     use WithPagination;
 
     protected $rules = [
@@ -24,8 +27,19 @@ class RegistrarCmayores extends Component
 
 
     public function render()
-    {   $this->catalogos = Catalogo::all();
-        /* $this->cuentasmay= CuentaMayor::all(); */
+    {   
+        $codem=Auth::user()->id;
+        
+
+        $this->catalogos = Catalogo::firstWhere('empresa_id',$codem);
+       
+        $this->cuentasM= CuentaMayor::all()->where('catalogo_id',$this->catalogos->id);
+        
+
+       
+
+
+       
         return view('livewire.cuentas.registrar-cmayores',[
             'cuentasmay' => CuentaMayor::where('nombre_cuenta_mayor', 'like', '%' . $this->search . '%')->paginate(5),
         ]);

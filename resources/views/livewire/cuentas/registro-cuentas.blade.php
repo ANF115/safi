@@ -67,7 +67,7 @@
            
 
                     <tbody>
-                        @foreach ($cuentas as $value)
+                        @foreach ($cuentass as $value)
                         
                             <tr>
                                     

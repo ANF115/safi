@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('cuenta_mayors', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('catalogo_id');
-            $table->string('codigo_cuenta_mayor')->unique();
+            $table->string('codigo_cuenta_mayor');
             $table->string('nombre_cuenta_mayor');
             $table->foreign('catalogo_id')->references('id')->on('catalogos');
             $table->timestamps();
