@@ -58,7 +58,12 @@ Route::middleware(['auth', 'isUser'])->group(function () {
 
    Route::view('/Opciones-Estados', 'estados.opciones-estados')->name('opcionesEstados');
    Route::view('/Cargar-Estados', 'estados.cargar-estados')->name('cargarEstados');
-   Route::view('/Registrar-Estados', 'estados.registrar-estados')->name('registrarEstados');
+   /*Route::view('/Registrar-Estados', 'estados.registrar-estados')->name('registrarEstados');*/
+   
+   Route::view('/Registrar-Periodo', 'periodo.registrar-periodo')->name('registrarPeriodo');
+   Route::view('/Registrar-Balance', 'estados.registrar-balance')->name('registrarBalance');
+   Route::view('/Registrar-Estados-Resultados', 'estados.registrar-er')->name('registrarER');
+
    Route::view('/Configuar-Cuentas', 'cuentas.configurar')->name('configurarCuentas');
    Route::view('/Analisis-Ratios', 'analisis.analisis-ratios')->name('analisisRatios');
    Route::view('/Comparacion-Empresas', 'analisis.comparacion-empresas')->name('comparacionEmpresas');

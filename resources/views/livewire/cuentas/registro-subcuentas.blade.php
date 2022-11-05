@@ -152,16 +152,23 @@
                                 <br>
                                 
                                 <select name="cuenta" id="edit_cuenta" wire:model="edit_cuenta_id">
-                                    
-                                    @foreach ($cuentas as $cuenta)
-                                        <option value="{{$cuenta->id}}" 
-                                            @foreach ($subcuentass as $subcuenta)
-                                                @if ($subcuenta->cuenta_id == $cuenta->id)
-                                                {{'selected="selected"'}}
-                                                @endif 
-                                            @endforeach >
-                                            {{ $cuenta->nombre_cuenta }} 
-                                        </option>               
+                                    @foreach ($cuentasmay as $cm) 
+                                        @foreach ($cuentas as $cuenta)
+                                            @if($cm->id == $cuenta->cuenta_mayor_id) 
+                                            
+                                                <option value="{{$cuenta->id}}" 
+                                                    @foreach ($subcuentass as $subcuenta)
+                                                    
+                                                        @if ($cuenta->id == $subcuenta->cuenta_id )
+                                                            
+                                                                {{'selected="selected"'}}
+                                                            
+                                                        @endif 
+                                                    @endforeach >
+                                                    {{ $cuenta->nombre_cuenta }} 
+                                                </option>    
+                                            @endif           
+                                        @endforeach
                                     @endforeach
                                 </select>
                                 @error('edit_cuenta_id') <span class="mt-1 error">{{ $message }}</span> @enderror
@@ -182,7 +189,7 @@
                 </div>
             </div>
             <!-- Modal -->
-            <div wire:ignore.self class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
+            <div wire:ignore.self class="modal fade" id="eliminarModal" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">

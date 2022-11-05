@@ -151,7 +151,7 @@
                                     @foreach ($cuentasmay as $cuentam)
                                         <option value="{{$cuentam->id}}" 
                                             @foreach ($cuentass as $cuenta)
-                                                @if ($cuenta->cuenta_mayor_id == $cuentam->id)
+                                                @if ($cuentam->id == $cuenta->cuenta_mayor_id )
                                                 {{'selected="selected"'}}
                                                 @endif 
                                             @endforeach >

@@ -44,7 +44,7 @@
                     <div>
                         <h3 class="fs-2">Registrar Estados Financieros </h3>
                         <p>Seleccionar las cuentas manualmente del catálogo y crear los estados financieros.</p>
-                        <a href="{{ route('registrarEstados') }}" class="btn btn-primary">
+                        <a href="{{ route('registrarPeriodo') }}" class="btn btn-primary">
                         Consultar
                         </a>
                     </div>
