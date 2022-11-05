@@ -16,7 +16,7 @@ class RegistroCuentas extends Component
 
     public $edit_codigo_cuenta,$edit_nombre_cuenta,$edit_cuenta_mayor_id;
 
-    public $codem,$catalogos;
+    public $codem,$catalogos,$cuentasmay,$cuentass;
     
     protected $rules = [
         'cuenta_mayor_id'=> 'required',
@@ -31,7 +31,7 @@ class RegistroCuentas extends Component
         $codem=Auth::user()->id;
         $this->catalogos = Catalogo::firstWhere('empresa_id',$codem);
         $this->cuentasmay= CuentaMayor::all()->where('catalogo_id',$this->catalogos->id);
-
+        
         $this->cuentass= Cuenta::all();
         
         return view('livewire.cuentas.registro-cuentas',[

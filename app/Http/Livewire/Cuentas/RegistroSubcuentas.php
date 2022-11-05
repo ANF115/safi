@@ -6,11 +6,16 @@ use Livewire\Component;
 use App\Models\Cuenta;
 use App\Models\SubCuenta;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\CuentaMayor;
+use App\Models\Catalogo;
 
 class RegistroSubcuentas extends Component
 {
     public $search,$cuenta_id,$nombre_subcuenta,$codigo_subcuenta,$selectedSubCuenta,$deleteSubCuenta_id;
     public $edit_cuenta_id,$edit_nombre_subcuenta,$edit_codigo_subcuenta;
+    public $codem,$catalogos,$cuentas,$cuentasmay;
     protected $rules = [
 
         'cuenta_id'=> 'required',
@@ -20,10 +25,14 @@ class RegistroSubcuentas extends Component
 
     use WithPagination;
     public function render()
-    {
+    {   $codem=Auth::user()->id;
+        $this->catalogos = Catalogo::firstWhere('empresa_id',$codem);
+        $this->cuentasmay= CuentaMayor::all()->where('catalogo_id',$this->catalogos->id);
         $this->cuentas= Cuenta::all();
-        /*$this->subcuentas = SubCuenta::all();*/
-        $this->subcuentass= Cuenta::all();
+        
+        $this->subcuentass= SubCuenta::all();
+
+
         return view('livewire.cuentas.registro-subcuentas',[
             'subcuentas' => SubCuenta::where('nombre_subcuenta', 'like', '%' . $this->search . '%')->paginate(5),
         ]);
