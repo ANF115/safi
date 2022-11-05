@@ -23,4 +23,6 @@ class RegistrarBalance extends Component
         $this->subcuentas= SubCuenta::all();
         return view('livewire.estados.registrar-balance');
     }
+
+    
 }

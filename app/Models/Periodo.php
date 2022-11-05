@@ -13,5 +13,10 @@ class Periodo extends Model
         'year',
         'fecha_inicio',
         'fecha_fin',
+        'catalogo_id'
     ];
+    public function catalogo()
+    {
+        return $this->belongsTo(Catalogo::class);
+    }
 }

@@ -17,17 +17,26 @@
                 <h1>Balance General</h1>
                 <div class="col-sm" >
                     
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Cuenta</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="form-select" aria-label="Default select example" wire:model="cuenta_id">
+                                <option value="">Cuenta </option>
+                                @foreach ($cuentasmay as $cm)
+                                        @foreach ($cuentas as $cuenta)
+                                            @if($cm->id == $cuenta->cuenta_mayor_id)
+                                                <option value="{{ $cuenta->id }}">
+                                                    {{ $cuenta->nombre_cuenta }}
+                                            @endif
+
+                                </option>
+                                        @endforeach
+                                @endforeach
                     </select>
+                        @error('cuenta_id') <span class="mt-1 error">{{ $message }}</span> @enderror
                 </div>
                 
                 <div class="col-sm">
                     
-                    <input type="text" class="form-control" id="valor" placeholder="Valor">
+                    <input type="numeric" class="form-control" id="valor" placeholder="Valor" wire:model="valor">
+                    @error('valor') <span class="mt-1 error">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-auto">
                     <button type="button" class="btn btn-success">Agregar</button>
@@ -38,18 +47,28 @@
             <div class="row g-3">
                 
                 <div class="col-sm" >
-                    
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>SubCuenta</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+                    <select class="form-select" aria-label="Default select example" wire:model="subcuenta_id">
+                                <option value="">Subcuenta</option>
+                                @foreach ($cuentasmay as $cm)
+                                        @foreach ($cuentas as $cuenta)
+                                             @foreach ($subcuentas as  $sub)
+                                                @if($cm->id == $cuenta->cuenta_mayor_id && $cuenta->id == $sub->cuenta_id)
+                                                    <option value="{{ $sub->id }}">
+                                                        {{ $sub->nombre_subcuenta }}
+                                                @endif
+
+                                </option>
+                                            @endforeach
+                                        @endforeach
+                                @endforeach
+                    </select>   
+                    @error('subcuenta_id') <span class="mt-1 error">{{ $message }}</span> @enderror
                 </div>
                 
                 <div class="col-sm">
                     
-                    <input type="text" class="form-control" id="valor" placeholder="Valor">
+                    <input type="text" class="form-control" id="valor" placeholder="Valor" wire:model="valor">
+                    @error('valor') <span class="mt-1 error">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-auto">
                     <button type="button" class="btn btn-success">Agregar</button>
