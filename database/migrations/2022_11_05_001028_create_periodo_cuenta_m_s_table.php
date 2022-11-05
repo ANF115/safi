@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('periodos', function (Blueprint $table) {
+        Schema::create('periodo_cuenta_m_s', function (Blueprint $table) {
             $table->id();
-            $table->integer('year');
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
-            
-
+            $table->unsignedBigInteger('cuenta_mayor_id');
+            $table->unsignedBigInteger('periodo_id');
+            $table->decimal('total');
+            $table->foreign('cuenta_mayor_id')->references('id')->on('cuenta_mayors');
+            $table->foreign('periodo_id')->references('id')->on('periodos');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('periodos');
+        Schema::dropIfExists('periodo_cuenta_m_s');
     }
 };

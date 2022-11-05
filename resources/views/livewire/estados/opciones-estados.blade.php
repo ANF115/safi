@@ -24,26 +24,26 @@
                 <h2>Sistema de Análisis Financiero</h2>
             </div>
                 
-                <div class="row g-4 py-5 row-cols-1  ">
+                <div class="row g-4 py-5">
                     <div class="col d-flex align-items-start">
                     <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
                         <svg class="bi" width="5em" height="5em"><use xlink:href="#excel"/></svg>
                     </div>
                     <div>
                         <h3 class="fs-2">Cargar Estados Financieros</h3>
-                        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                        <p>Cargar estados financieros a traves de un archivo de excel.</p>
                         <a href="{{ route('cargarEstados') }}" class="btn btn-primary">
                         Consultar
                         </a>
                     </div>
                     </div>
-                    <div class="col d-flex align-items-start">
+                    <div class="col align-items-start">
                     <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
                         <svg class="bi" width="5em" height="5em"><use xlink:href="#registrar"/></svg>
                     </div>
                     <div>
                         <h3 class="fs-2">Registrar Estados Financieros </h3>
-                        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                        <p>Seleccionar las cuentas manualmente del catálogo y crear los estados financieros.</p>
                         <a href="{{ route('registrarEstados') }}" class="btn btn-primary">
                         Consultar
                         </a>
@@ -51,7 +51,9 @@
                     </div>
                     
                     
+                    
                 </div>
+                
 
             
                 
