@@ -14,36 +14,7 @@
         <br>
         <div class="container">
             <div class="row g-3">
-                <h1>Registro de Período Contable</h1>
-                <div class="col-sm">
-                    
-                    <input type="text" class="form-control" id="año" placeholder="Año" wire:model="year">
-                    <br>
-                    @error('year') <span class="mt-1 error">{{ $message }}</span> @enderror
-                </div>
-                <div class="col-sm">
-                    
-                    <input type="date" class="form-control" id="año" placeholder="Fecha Inicio"  wire:model="fecha_inicio">
-                    <br>
-                    @error('fecha_inicio') <span class="mt-1 error">{{ $message }}</span> @enderror
-                </div>
-                <div class="col-sm">
-                    
-                    <input type="date" class="form-control" id="año" placeholder="Fecha Fin" wire:model="fecha_fin">
-                    <br>
-                    @error('fecha_fin') <span class="mt-1 error">{{ $message }}</span> @enderror
-                </div>
-                <div class="col-sm">
-                    <button type="button" class="btn btn-success "wire:click="save_periodo()">Guardar</button>
-                </div>
-                
-            
-            </div>
-        <br>
-        </div>
-        <div class="container">
-            <div class="row g-3">
-                <h2>Balance General</h2>
+                <h1>Balance General</h1>
                 <div class="col-sm" >
                     
                     <select class="form-select" aria-label="Default select example">
@@ -135,101 +106,14 @@
         
 
         </div>
-        <br>
         <div class="container">
-            <div class="row g-3">
-                <h2>Estado de Perdidas y Ganancias</h2>
-                <div class="col-sm" >
-                    
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Cuenta</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
+             <div class="row g-3">
                 <div class="col-sm">
-                    
-                    <input type="text" class="form-control" id="valor" placeholder="Valor">
+                        <a href="{{ route('registrarER') }}" type="button" class="btn btn-success " >Siguiente</a>
                 </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-success">Agregar</button>
-                </div>
-            </div>
-            <br>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Código</th>
-                        <th scope="col">Cuenta Mayor</th>
-                        <th scope="col">Cuenta</th>
-                        
-                        <th scope="col">Acciones</th>
-
-                    </tr>
-                </thead>
-            
-
-                <tbody>
-                    
-                    <tr>
-                            
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            
-                            <td>
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#exampleModal2" wire:click="">
-                                            Editar</button>
-
-                                <button type="button" class="btn btn-danger" data-toggle="modal"
-                                            data-target="#exampleModal3"
-                                            wire:click="">Eliminar</button>
-                            </td>
-
-                    </tr>
-                    
-
-
-                </tbody>
-            </table>
-           
-        
-
+             </div>
         </div>
+        <br>
+        <br>
     </body>
-    @if(Session::has('success'))
-            <script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Felicidades!',
-                    text: '{{ Session::get("success") }}'
-                })
-            </script>
-    @endif
 </div>
-<style>
-        .content-centrado {
-        background-color: #fafafa;
-        margin: 1rem;
-        padding: 1rem;
-        /* border: 2px solid #ccc; */
-        /* IMPORTANTE */
-        text-align: center;
-    }
-
-    .campo:last-child {
-        justify-content: flex-end;
-    }
-
-    .form-control {
-        color: black;
-    }
-    .error{
-        color: red;
-    }
-</style>
