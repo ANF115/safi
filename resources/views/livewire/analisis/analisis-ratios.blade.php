@@ -28,8 +28,7 @@
                     <th scope="row">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                     </th>
-                        <td>Mark</td>
-                        <td>Otto</td>
+                        <td colspan="2">Mark</td>
                         <td>
                         <span class="material-symbols-outlined">more_vert</span>
                         </td>
@@ -54,6 +53,9 @@
                     <tr>
                 </tbody>
             </table>
+            <div class="d-grid gap-2 col-12 mx-auto">
+                <button type="button" class="btn btn-primary">Análizar</button>
+            </div>
         </div>
         <div class="col-8">col-8
 
