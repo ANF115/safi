@@ -38,23 +38,14 @@ class CargarEstados extends Component
                 'fecha_fin' => $this->fecha_fin,
                 'catalogo_id' => $this->catalogo->id
             ]);
-            Excel::import(new EstadosFinancierosImport($this->catalogo,$periodoSeleccionado),$this->estadosFinancieros);
+            // Recuperando datos del archivo excel
+            $estadosFinancierosSheets=Excel::toArray(new EstadosFinancierosImport($this->catalogo,$periodoSeleccionado),$this->estadosFinancieros);
+
+            dd($estadosFinancierosSheets);
             return session()->flash("success", "Estados Financieros Registrados Correctamente");
         }catch(\Maatwebsite\Excel\Validators\ValidationException $e){
-            $failures = $e->failures();
-            $messages="Las cuentas ";
-            foreach ($failures as $failure) {
-                $messages+=$failure->values().", ";
-                // $failure->row(); // row that went wrong
-                // // $failure->attribute(); // either heading key (if using heading row concern) or column index
-                // $failure->errors(); // Actual error messages from Laravel validator
-                ; // The values of the row that has failed.
-            }
-            $messages+=" no se encuentran registradas en el catálogo de cuentas. Necesita revisar los nombres de las cuentas o agregarlas al catálogo de cuentas e intentar de nuevo.";
             return session()->flash("fail", "Errorazo");
         }
-        // return response()->json(["cuentas"=>$cuentas]);
-        // dd($cuentas->toCollection());
     }
     public function render()
     {
