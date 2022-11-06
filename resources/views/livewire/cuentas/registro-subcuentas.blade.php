@@ -22,12 +22,16 @@
                         <div class="col-sm">
                             <select class="form-select" aria-label="Default select example" wire:model="cuenta_id">
                                 <option value="">Cuenta </option>
-                                    @foreach ($cuentas as $cuenta)
-                                        <option value="{{ $cuenta->id }}">
-                                            {{ $cuenta->nombre_cuenta }}
+                                @foreach ($cuentasmay as $cm)
+                                        @foreach ($cuentas as $cuenta)
+                                            @if($cm->id == $cuenta->cuenta_mayor_id)
+                                                <option value="{{ $cuenta->id }}">
+                                                    {{ $cuenta->nombre_cuenta }}
+                                            @endif
 
                                 </option>
-                                    @endforeach
+                                        @endforeach
+                                @endforeach
                             </select>
                             @error('cuenta_id') <span class="mt-1 error">{{ $message }}</span> @enderror
                         </div>
@@ -67,26 +71,31 @@
             
 
                         <tbody>
-                            @foreach ($subcuentas as  $value)
+                        @foreach ($cuentasmay as $cm)
+                            @foreach ($cuentas as $cuenta)
+                                 @foreach ($subcuentas as  $sub)
                             
-                                <tr>
-                                        
-                                        <td>{{ $value->codigo_subcuenta }}</td>
-                                        <td>{{ $value->nombre_subcuenta }}</td>
-                                        <td>{{ $value->cuenta->codigo_cuenta }}</td>
-                                        <td>{{ $value->cuenta->nombre_cuenta }}</td>
-                                        <td>
-                                        <button type="button" class="btn btn-primary" id="btn-editar"
+                                        <tr>
+                                             @if($cm->id == $cuenta->cuenta_mayor_id && $cuenta->id == $sub->cuenta_id)   
+                                                <td>{{ $sub->codigo_subcuenta }}</td>
+                                                <td>{{ $sub->nombre_subcuenta }}</td>
+                                                <td>{{ $sub->cuenta->codigo_cuenta }}</td>
+                                                <td>{{ $sub->cuenta->nombre_cuenta }}</td>
+                                                <td>
+                                                <button type="button" class="btn btn-primary" id="btn-editar"
 
-                                            data-bs-toggle="modal" data-bs-target="#editarModal"
-                                            wire:click="edit({{ $value->id }})">Editar</button>
-                                        <button type="button" class="btn btn-danger" id="btn-eliminar"
-                                            data-bs-toggle="modal" data-bs-target="#eliminarModal"
-                                            wire:click="delete({{ $value->id  }})">Eliminar</button>
-                                    </td>
+                                                    data-bs-toggle="modal" data-bs-target="#editarModal"
+                                                    wire:click="edit({{ $sub->id }})">Editar</button>
+                                                <button type="button" class="btn btn-danger" id="btn-eliminar"
+                                                    data-bs-toggle="modal" data-bs-target="#eliminarModal"
+                                                    wire:click="delete({{ $sub->id  }})">Eliminar</button>
+                                                </td>
+                                            @endif
 
-                                </tr>
-                            @endforeach   
+                                        </tr>
+                                    @endforeach
+                            @endforeach 
+                        @endforeach  
 
 
                         </tbody>
@@ -143,16 +152,23 @@
                                 <br>
                                 
                                 <select name="cuenta" id="edit_cuenta" wire:model="edit_cuenta_id">
-                                    
-                                    @foreach ($cuentas as $cuenta)
-                                        <option value="{{$cuenta->id}}" 
-                                            @foreach ($subcuentass as $subcuenta)
-                                                @if ($subcuenta->cuenta_id == $cuenta->id)
-                                                {{'selected="selected"'}}
-                                                @endif 
-                                            @endforeach >
-                                            {{ $cuenta->nombre_cuenta }} 
-                                        </option>               
+                                    @foreach ($cuentasmay as $cm) 
+                                        @foreach ($cuentas as $cuenta)
+                                            @if($cm->id == $cuenta->cuenta_mayor_id) 
+                                            
+                                                <option value="{{$cuenta->id}}" 
+                                                    @foreach ($subcuentass as $subcuenta)
+                                                    
+                                                        @if ($cuenta->id == $subcuenta->cuenta_id )
+                                                            
+                                                                {{'selected="selected"'}}
+                                                            
+                                                        @endif 
+                                                    @endforeach >
+                                                    {{ $cuenta->nombre_cuenta }} 
+                                                </option>    
+                                            @endif           
+                                        @endforeach
                                     @endforeach
                                 </select>
                                 @error('edit_cuenta_id') <span class="mt-1 error">{{ $message }}</span> @enderror
@@ -173,7 +189,7 @@
                 </div>
             </div>
             <!-- Modal -->
-            <div wire:ignore.self class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
+            <div wire:ignore.self class="modal fade" id="eliminarModal" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">

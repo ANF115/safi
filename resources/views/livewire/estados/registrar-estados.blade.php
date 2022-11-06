@@ -53,6 +53,29 @@
                         <option value="3">Three</option>
                     </select>
                 </div>
+                
+                <div class="col-sm">
+                    
+                    <input type="text" class="form-control" id="valor" placeholder="Valor">
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-success">Agregar</button>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row g-3">
+                
+                <div class="col-sm" >
+                    
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>SubCuenta</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                
                 <div class="col-sm">
                     
                     <input type="text" class="form-control" id="valor" placeholder="Valor">
@@ -66,46 +89,49 @@
                 <thead>
                     <tr>
                         
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Código</th>
-                        <th scope="col">Cuenta Mayor</th>
-                        <th scope="col">Cuenta</th>
-                        <th scope="col">Subcuenta</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">Nombre Cuenta</th>
+                        <th scope="col">$</th>
 
                     </tr>
                 </thead>
             
 
                 <tbody>
+                    @foreach ($cuentasmay as $cm)
+                        <tr>
+                                <td><b>{{$cm->nombre_cuenta_mayor}}</b></td>
+                                <td></td>
+                        </tr>
+                        @foreach ($cuentas as $cuenta)
+                            <tr>
+                                @if($cm->id == $cuenta->cuenta_mayor_id)
+                                    <td>{{$cuenta->nombre_cuenta}}</td>
+                                    <td></td>
+                                @endif
+                            </tr>
+                            @foreach ($subcuentas as  $sub)
+                                <tr>
+                                     @if($cm->id == $cuenta->cuenta_mayor_id && $cuenta->id == $sub->cuenta_id)
+                                        <td>{{$sub->nombre_subcuenta}}</td>
+                                        <td></td>
+                                    @endif
+                                </tr>
+                            @endforeach
+
+                        @endforeach
+
+
+
+                    @endforeach
+
                     
-                    <tr>
-                            
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#exampleModal2" wire:click="">
-                                            Editar</button>
-
-                                <button type="button" class="btn btn-danger" data-toggle="modal"
-                                            data-target="#exampleModal3"
-                                            wire:click="">Eliminar</button>
-                            </td>
-
-                    </tr>
                     
 
 
                 </tbody>
             </table>
-            <div>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal2" wire:click="">
-                    Guardar</button>
-            </div>
+
+            
         
 
         </div>
@@ -171,10 +197,7 @@
 
                 </tbody>
             </table>
-            <div>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal2" wire:click="">
-                    Guardar</button>
-            </div>
+           
         
 
         </div>

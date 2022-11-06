@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cuentas', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('cuenta_mayor_id');
-            $table->string('codigo_cuenta');
-            $table->string('nombre_cuenta');
-            $table->foreign('cuenta_mayor_id')->references('id')->on('cuenta_mayors');
-            $table->timestamps();
+        Schema::table('periodos', function (Blueprint $table) {
+            //
+            $table->unsignedBigInteger('catalogo_id')->after('fecha_fin');
+            $table->foreign('catalogo_id')->references('id')->on('catalogos');
         });
     }
 
@@ -30,6 +27,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cuentas');
+        Schema::table('periodos', function (Blueprint $table) {
+            //
+            $table->dropColumn('catalogo_id');
+        });
     }
 };

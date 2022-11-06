@@ -67,25 +67,27 @@
            
 
                     <tbody>
-                        @foreach ($cuentass as $value)
-                        
-                            <tr>
-                                    
-                                    <td>{{ $value->codigo_cuenta }}</td>
-                                    <td>{{ $value->nombre_cuenta }}</td>
-                                    <td>{{ $value->cuenta_mayor->codigo_cuenta_mayor }}</td>
-                                    <td>{{ $value->cuenta_mayor->nombre_cuenta_mayor }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary" id="btn-editar"
+                        @foreach ($cuentasmay as $cm)
+                            @foreach ($cuentass as $cuenta)
+                                <tr>
+                                      @if($cm->id == $cuenta->cuenta_mayor_id)  
+                                            <td>{{ $cuenta->codigo_cuenta }}</td>
+                                            <td>{{ $cuenta->nombre_cuenta }}</td>
+                                            <td>{{ $cuenta->cuenta_mayor->codigo_cuenta_mayor }}</td>
+                                            <td>{{ $cuenta->cuenta_mayor->nombre_cuenta_mayor }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary" id="btn-editar"
 
-                                            data-bs-toggle="modal" data-bs-target="#editarModal"
-                                            wire:click="edit({{ $value->id }})">Editar</button>
-                                        <button type="button" class="btn btn-danger" id="btn-eliminar"
-                                            data-bs-toggle="modal" data-bs-target="#eliminarModal"
-                                            wire:click="delete({{ $value->id  }})">Eliminar</button>
-                                    </td>
+                                                    data-bs-toggle="modal" data-bs-target="#editarModal"
+                                                    wire:click="edit({{ $cuenta->id }})">Editar</button>
+                                                <button type="button" class="btn btn-danger" id="btn-eliminar"
+                                                    data-bs-toggle="modal" data-bs-target="#eliminarModal"
+                                                    wire:click="delete({{ $cuenta->id  }})">Eliminar</button>
+                                            </td>
+                                        @endif
 
-                            </tr>
+                                </tr>
+                            @endforeach  
                         @endforeach   
 
 
@@ -149,7 +151,7 @@
                                     @foreach ($cuentasmay as $cuentam)
                                         <option value="{{$cuentam->id}}" 
                                             @foreach ($cuentass as $cuenta)
-                                                @if ($cuenta->cuenta_mayor_id == $cuentam->id)
+                                                @if ($cuentam->id == $cuenta->cuenta_mayor_id )
                                                 {{'selected="selected"'}}
                                                 @endif 
                                             @endforeach >
