@@ -14,7 +14,8 @@ class AnalisisRatios extends Component
 {
     //Definiendo variables
     public $codEmpresa, $periodoSelect=[], $categoriasSelect=[],$nombre, $ratio,$ratios=[],
-           $nombreCategorias=[],$categorias,$nombreCat,$periodos,$yearPeriodos=[],$year;
+           $nombreCategorias=[],$categorias,$nombreCat,$periodos,$yearPeriodos=[],$year,
+           $ventasNetas, $promCxCComerciales, $valorPeriodoIn, $valorPeriodoFin;
 
     public function render()
     {
@@ -45,7 +46,7 @@ class AnalisisRatios extends Component
                 //Obteniendo datos de categoria
                 $this->nombreCat=$this->categorias[$c];
                 array_push($this->nombreCategorias,$this->nombreCat);
-                //Consultando datos de las categorias
+                //Consultando datos de los ratios
                 $this->ratio= Ratio::where('categoria_id',$this->categoriasSelect[$i])->get();
                 for($r=0;$r<sizeof($this->ratio);$r++){
                     $this->nombre=$this->ratio[$r];
@@ -55,5 +56,10 @@ class AnalisisRatios extends Component
             
         }
         // dd($this->categoriasSelect, $this->ratios);
+    }
+    //Ratios de Actividad
+    //Método para calcular la razón de rotación de CXC
+    public function razonRotacionCxC(){
+
     }
 }
