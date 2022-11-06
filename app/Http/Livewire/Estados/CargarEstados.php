@@ -39,11 +39,10 @@ class CargarEstados extends Component
                 'catalogo_id' => $this->catalogo->id
             ]);
             $fileHandler=new EstadosFinancierosImport($this->catalogo,$periodoSeleccionado);
-            Excel::import($fileHandler,$this->estadosFinancieros);
-            if(($fileHandler->sheets())[0]->contadorErrores>0){
-                return session()->flash("fail", $fileHandler->errores);
-            }
-            return session()->flash("success", "Estados Financieros Registrados Correctamente");
+            $collection=Excel::toCollection($fileHandler,$this->estadosFinancieros);
+            dd($collection);
+            // return session()->flash("fail", $fileHandler->balanceGeneral->contadorCuentasMayoresTotal);
+            // return session()->flash("success", "Estados Financieros Registrados Correctamente");
         }catch(\Maatwebsite\Excel\Validators\ValidationException $e){
             // $failures = $e->failures();
             // $messages="Las cuentas ";

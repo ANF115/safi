@@ -47,7 +47,9 @@ class BalanceGeneralImport implements ToCollection, WithCalculatedFormulas, Skip
 
     public function collection(Collection $rows)
     {
-
+        $cuentaMayor=null;
+        $cuenta=null;
+        $subcuenta=null;
         foreach ($rows as $row) 
         {
             $this->valor=$row[1];
@@ -56,21 +58,12 @@ class BalanceGeneralImport implements ToCollection, WithCalculatedFormulas, Skip
             // $periodoCuentaMayor=PeriodoCuentaM::with(['cuenta_mayor','periodo'])->where('cuenta_mayor.nombre_cuenta_mayor',$nombre_cuenta)->first();
             try{
                 $cuentaMayor=CuentaMayor::where('catalogo_id','=',$this->catalogo->id)
-                ->where('nombre_cuenta_mayor', 'like','%'.$this->nombre_cuenta.'%')
+                ->where('LOWER(nombre_cuenta_mayor)', 'like','%'.strtolower($this->nombre_cuenta).'%')
                 ->first();
             }catch(QueryException $e){
                 
                 // // dd($e->getMessage());
                 // $cuenta=Cuenta::where('nombre_cuenta', 'like','%'.$this->nombre_cuenta.'%')
-                // ->join('cuenta_mayors', function($join){
-                //     $join->on('periodo_cuenta_m_s.cuenta_mayor_id','=','cuenta_mayors.id')
-                //     ->where('cuenta_mayors.nombre_cuenta_mayor', 'like','%'.$this->nombre_cuenta.'%');
-                // })
-                // ->firstOrFail();
-            }catch(QueryException $e){
-                
-                // // dd($e->getMessage());
-                // $subcuenta=SubCuenta::where('nombre_subcuenta', 'like','%'.$this->nombre_cuenta.'%')
                 // ->join('cuenta_mayors', function($join){
                 //     $join->on('periodo_cuenta_m_s.cuenta_mayor_id','=','cuenta_mayors.id')
                 //     ->where('cuenta_mayors.nombre_cuenta_mayor', 'like','%'.$this->nombre_cuenta.'%');

@@ -7,10 +7,12 @@ class EstadosFinancierosImport implements WithMultipleSheets
 {
     private $catalogo;
     private $periodo;
+    public $erroresBalanceGeneral;
     public function  __construct($catalogo, $periodo)
     {
         $this->catalogo= $catalogo;
         $this->periodo=$periodo;
+        $this->erroresBalanceGeneral="Balance General ";
     }  
     public function sheets(): array
     {
