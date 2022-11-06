@@ -34,7 +34,7 @@ class RegistroSubcuentas extends Component
 
 
         return view('livewire.cuentas.registro-subcuentas',[
-            'subcuentas' => SubCuenta::where('nombre_subcuenta', 'like', '%' . $this->search . '%')->paginate(5),
+            'subcuentas' => SubCuenta::where('nombre_subcuenta', 'like', '%' . $this->search . '%')->paginate(60),
         ]);
     }
 

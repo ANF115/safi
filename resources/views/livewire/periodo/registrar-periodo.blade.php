@@ -15,25 +15,29 @@
         <div class="container">
             <div class="row g-3">
                 <h1>Registro de Período Contable</h1>
+                <br>
+                <br>
                 <div class="col-sm">
+                    <br>
                     
                     <input type="text" class="form-control" id="año" placeholder="Año" wire:model="year">
                     <br>
                     @error('year') <span class="mt-1 error">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-sm">
-                    
-                    <input type="date" class="form-control" id="año" placeholder="Fecha Inicio"  wire:model="fecha_inicio">
+                    <label for="fecha_inicio">Fecha Inicio </label>
+                    <input type="date" class="form-control" id="fecha_inicio" placeholder="Fecha Inicio"  wire:model="fecha_inicio">
                     <br>
                     @error('fecha_inicio') <span class="mt-1 error">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-sm">
-                    
-                    <input type="date" class="form-control" id="año" placeholder="Fecha Fin" wire:model="fecha_fin">
+                    <label for="fecha_fin">Fecha Fin</label>
+                    <input type="date" class="form-control" id="fecha_fin" placeholder="Fecha Fin" wire:model="fecha_fin">
                     <br>
                     @error('fecha_fin') <span class="mt-1 error">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-sm">
+                    <br>
                         <select class="form-select" aria-label="Default select example" wire:model="catalogo_id">
                             <option value="">Catálogo</option>
                                 
@@ -47,9 +51,45 @@
                 </div>
 
                 <div class="col-sm">
+                    <br>
                     <button type="button" class="btn btn-success "wire:click="save_periodo()">Guardar</button>
                 </div>
-                
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col"># Periodo</th>
+                            <th scope="col">Año</th>
+                            <th scope="col">Fecha Inicio</th>
+                            <th scope="col">Fecha Fin</th>
+                            <th scope="col">Catálogo</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                     
+                            @foreach ($periodoss as $key => $per)
+                                
+                                    <tr>
+                                       
+                                                <th scope="row">{{ $key + 1 }}</th>
+                                                <td>{{ $per->year }}</td>
+                                                <td>{{ $per->fecha_inicio }}</td>
+                                                <td>{{ $per->fecha_fin }}</td>
+                                                <td>{{ $per->catalogo->nombre_catalogo }}</td>
+                                           
+                                       
+
+                                    </tr>
+                                
+                               
+                            @endforeach
+                        
+                       
+                    </tbody>
+                </table>
+                {{ $periodos->links() }}
             
             </div>
         </div>
