@@ -17,17 +17,17 @@
     <div class="row">
         <div class="col-3">
             <!-- Tabla para seleccionar periodos -->
-            <table  class="table">
+            <table  class="table table-hover">
                 <thead class="table-primary" >
                     <tr >
                         <td colspan="4">Periodos</td>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($periodos as $periodo)
+                    @foreach ($periodos as $index => $periodo)
                         <tr>
                         <th scope="row">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="{{ $periodo->id }}" id="{{ $periodo->id }}" wire:model="periodoSelect.{{$index}}">
                         </th>
                             <td colspan="2">{{ $periodo->year }}</td>
                             <td>
@@ -46,10 +46,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($categorias as $categoria)
+                    @foreach ($categorias as $index => $categoria)
                         <tr>
                         <th scope="row">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="{{ $categoria->id }}" id="{{ $categoria->id }}" wire:model="categoriasSelect.{{$index}}">
                         </th>
                             <td>{{ $categoria->nombre_categoria }}</td>
                         </tr>
@@ -58,11 +58,37 @@
                 </tbody>
             </table>
             <div class="d-grid gap-2 col-12 mx-auto">
-                <button type="button" class="btn btn-primary">Análizar</button>
+                <button type="submit" class="btn btn-primary" wire:click="analizarRatios()">Análizar</button>
             </div>
         </div>
-        <div class="col-8">col-8
-
+        <div class="col-8">
+            @if($nombreCategorias)
+                @foreach($nombreCategorias as $categoria)
+                    <h1>{{$categoria->nombre_categoria}}</h1>
+                    <table  class="table table-hover">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th >Ratio</th>
+                                @foreach($yearPeriodos as $year)
+                                    <th>{{$year->year}}</th>
+                                @endforeach
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($ratios as $ratio)
+                                @if($categoria->id==$ratio->categoria_id)
+                                    <tr>
+                                        <td>{{ $ratio->nombre_ratio }}</td>
+                                        @foreach($yearPeriodos as $year)
+                                            <td>{{ $ratio->unidad }}</td>
+                                        @endforeach
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endforeach
+            @endif
         </div>
     </div>
     </div>
