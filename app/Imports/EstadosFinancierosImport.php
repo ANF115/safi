@@ -1,23 +1,22 @@
 <?php
-
 namespace App\Imports;
 
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class EstadosFinancierosImport implements ToCollection, WithCalculatedFormulas
+class EstadosFinancierosImport implements WithMultipleSheets 
 {
-    public function collection(Collection $rows)
+    private $catalogo;
+    private $periodo;
+    public function  __construct($catalogo, $periodo)
     {
-        $cuenta=array();
-        foreach ($rows as $row) 
-        {
-            $cuenta[]=([
-                            'nombre' => $row[0],
-                            'valor'=>$row[1]
-                        ]);
-        }
-        dd($cuenta);
+        $this->catalogo= $catalogo;
+        $this->periodo=$periodo;
+    }  
+    public function sheets(): array
+    {
+        return [
+            0 => new BalanceGeneralImport($this->catalogo, $this->periodo),
+            1 => new EstadoResultadosImport($this->catalogo, $this->periodo),
+        ];
     }
 }
