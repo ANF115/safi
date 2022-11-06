@@ -100,7 +100,7 @@ INSERT INTO public.cuenta_mayors(
             VALUES (3020,3004,'1', 'Capital Social');
         INSERT INTO public.sub_cuentas(
             id, cuenta_id, codigo_subcuenta, nombre_subcuenta)
-            VALUES (3021,3004,'2', 'Reservas');
+            VALUES (3021,3004,'2', 'Reserva legal');
         INSERT INTO public.sub_cuentas(
             id, cuenta_id, codigo_subcuenta, nombre_subcuenta)
             VALUES (3022,3004,'3', 'Utilidades no distribuidas');
@@ -117,6 +117,9 @@ INSERT INTO public.cuenta_mayors(
         INSERT INTO public.sub_cuentas(
             id, cuenta_id, codigo_subcuenta, nombre_subcuenta)
             VALUES (3024,3005,'1', 'Ventas');
+        INSERT INTO public.sub_cuentas(
+            id, cuenta_id, codigo_subcuenta, nombre_subcuenta)
+            VALUES (3036,3005,'2', 'Otros ingresos');
 INSERT INTO public.cuenta_mayors(
 	 id, catalogo_id, codigo_cuenta_mayor, nombre_cuenta_mayor)
 	VALUES (3004,3000,'5','Cuentas de resultados Deudoras');
@@ -134,10 +137,13 @@ INSERT INTO public.cuenta_mayors(
             VALUES (3027,3006,'3', 'Gastos de Administración');
          INSERT INTO public.sub_cuentas(
             id, cuenta_id, codigo_subcuenta, nombre_subcuenta)
-            VALUES (3028,3006,'4', 'Impuestos sobre la renta');
+            VALUES (3035,3006,'4', 'Gastos de Operación');
          INSERT INTO public.sub_cuentas(
             id, cuenta_id, codigo_subcuenta, nombre_subcuenta)
-            VALUES (3029,3006,'5', 'Gastos Financieros');
+            VALUES (3028,3006,'5', 'Impuestos sobre la renta');
+         INSERT INTO public.sub_cuentas(
+            id, cuenta_id, codigo_subcuenta, nombre_subcuenta)
+            VALUES (3029,3006,'6', 'Gastos Financieros');
 INSERT INTO public.cuenta_mayors(
 	 id, catalogo_id, codigo_cuenta_mayor, nombre_cuenta_mayor)
 	VALUES (3005,3000,'6','Cuentas liquidadoras o de cierre');
@@ -158,4 +164,4 @@ INSERT INTO public.cuenta_mayors(
             VALUES (3033,3007,'4', 'Utilidad Financiera');
          INSERT INTO public.sub_cuentas(
             id, cuenta_id, codigo_subcuenta, nombre_subcuenta)
-            VALUES (3034,3007,'5', 'Utilidad Antes de impuestos');
+            VALUES (3034,3007,'5', 'Utilidad Antes de impuesto y reserva legal');
