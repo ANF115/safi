@@ -15,9 +15,58 @@
         <div class="container">
             <div class="row g-3">
                 <h1>Balance General</h1>
+                <div class="col-sm">
+                   
+                        <select class="form-select" aria-label="Default select example" id="periodo_id_3" wire:model="periodo_id_3">
+                            <option value="">Periodo</option>
+                                @foreach ($periodos as $per)
+                                    <option value="{{ $per->id }}">
+                                        {{ $per->year }}
+
+                            </option>
+                                    @endforeach
+                                
+                        </select>
+                        @error('periodo_id_3') <span class="mt-1 error">{{ $message }}</span> @enderror
+                </div>
+                <div class="col-sm">
+                
+                        <select class="form-select" aria-label="Default select example" wire:model="cuenta_mayor_id">
+                            <option value="">Cuenta Mayor </option>
+                                @foreach ($cuentasmay as $cuentam)
+                                    <option value="{{ $cuentam->id }}">
+                                        {{ $cuentam->nombre_cuenta_mayor }}
+
+                            </option>
+                                @endforeach
+                        </select>
+                        @error('cuenta_mayor_id') <span class="mt-1 error">{{ $message }}</span> @enderror
+                    
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-success" wire:click="save_cuenta_mayor()">Agregar</button>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row g-3">
+                <div class="col-sm">
+                   
+                        <select class="form-select" aria-label="Default select example" id="periodo_id_1" wire:model="periodo_id_1">
+                            <option value="">Periodo</option>
+                                @foreach ($periodos as $per)
+                                    <option value="{{ $per->id }}">
+                                        {{ $per->year }}
+
+                            </option>
+                                    @endforeach
+                                
+                        </select>
+                        @error('periodo_id_1') <span class="mt-1 error">{{ $message }}</span> @enderror
+                </div>
                 <div class="col-sm" >
                     
-                    <select class="form-select" aria-label="Default select example" wire:model="cuenta_id">
+                    <select class="form-select" aria-label="Default select example" id="cuenta_id" wire:model="cuenta_id">
                                 <option value="">Cuenta </option>
                                 @foreach ($cuentasmay as $cm)
                                         @foreach ($cuentas as $cuenta)
@@ -35,19 +84,33 @@
                 
                 <div class="col-sm">
                     
-                    <input type="numeric" class="form-control" id="valor" placeholder="Valor" wire:model="valor">
-                    @error('valor') <span class="mt-1 error">{{ $message }}</span> @enderror
+                    <input type="numeric" class="form-control" id="valor1" placeholder="Valor" wire:model="valor1">
+                    @error('valor1') <span class="mt-1 error">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-success">Agregar</button>
+                    <button type="button" class="btn btn-success" wire:click="save_cuenta()">Agregar</button>
                 </div>
             </div>
             <br>
             <br>
             <div class="row g-3">
+                <div class="col-sm">
+                        
+                        <select class="form-select" aria-label="Default select example" id="periodo_id_2" wire:model="periodo_id_2">
+                            <option value="">Periodo</option>
+                                @foreach ($periodos as $per)
+                                    <option value="{{ $per->id }}">
+                                        {{ $per->year }}
+
+                            </option>
+                                    @endforeach
+                                
+                        </select>
+                        @error('periodo_id_2') <span class="mt-1 error">{{ $message }}</span> @enderror
+                </div>
                 
                 <div class="col-sm" >
-                    <select class="form-select" aria-label="Default select example" wire:model="subcuenta_id">
+                    <select class="form-select" aria-label="Default select example" id="subcuenta_id" wire:model="subcuenta_id">
                                 <option value="">Subcuenta</option>
                                 @foreach ($cuentasmay as $cm)
                                         @foreach ($cuentas as $cuenta)
@@ -67,11 +130,11 @@
                 
                 <div class="col-sm">
                     
-                    <input type="text" class="form-control" id="valor" placeholder="Valor" wire:model="valor">
-                    @error('valor') <span class="mt-1 error">{{ $message }}</span> @enderror
+                    <input type="numeric" class="form-control" id="valor2" placeholder="Valor"  wire:model="valor2">
+                    @error('valor2') <span class="mt-1 error">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-success">Agregar</button>
+                    <button type="button" class="btn btn-success"  wire:click="save_subcuenta()">Agregar</button>
                 </div>
             </div>
             <br>
@@ -81,38 +144,51 @@
                         
                         <th scope="col">Nombre Cuenta</th>
                         <th scope="col">$</th>
+                        <th scope="col">Acciones</th>
 
                     </tr>
                 </thead>
             
 
                 <tbody>
-                    @foreach ($cuentasmay as $cm)
-                        <tr>
-                                <td><b>{{$cm->nombre_cuenta_mayor}}</b></td>
-                                <td></td>
-                        </tr>
-                        @foreach ($cuentas as $cuenta)
+                 
+                
+                        @foreach ($periodos_CM as $pcm)
                             <tr>
-                                @if($cm->id == $cuenta->cuenta_mayor_id)
-                                    <td>{{$cuenta->nombre_cuenta}}</td>
+                                    <td><b>{{$pcm->cuenta_mayor->nombre_cuenta_mayor}}</b></td>
                                     <td></td>
-                                @endif
+                                    <td></td>
                             </tr>
-                            @foreach ($subcuentas as  $sub)
+                            @foreach ($periodos_cuentas as $pcuenta)
                                 <tr>
-                                     @if($cm->id == $cuenta->cuenta_mayor_id && $cuenta->id == $sub->cuenta_id)
-                                        <td>{{$sub->nombre_subcuenta}}</td>
-                                        <td></td>
+                                    
+                                    @if($pcm->cuenta_mayor_id == $pcuenta->cuenta->cuenta_mayor_id)
+                                        <td>{{$pcuenta->cuenta->nombre_cuenta}}</td>
+                                        <td>{{$pcuenta->valor}}</td>
+                                        <td>
+                                        <button type="button" class="btn btn-primary" id="btn-editar"
+                                            data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
+                                            wire:click="edit_cuenta({{ $pcuenta->id }})">Editar</button>
+                                       
                                     @endif
                                 </tr>
+                                @foreach ($periodos_subcuentas as  $psub)
+                                    <tr>
+                                        @if($pcm->cuenta_mayor_id == $pcuenta->cuenta->cuenta_mayor_id && $pcuenta->cuenta->id == $psub->subcuenta->cuenta_id)
+                                            <td>{{$psub->subcuenta->nombre_subcuenta}}</td>
+                                            <td>{{$psub->valor}}</td>
+                                            <td>
+                                            <button type="button" class="btn btn-primary" id="btn-editar"
+                                                data-bs-toggle="modal" data-bs-target="#editarModalSubcuenta"
+                                                wire:click="edit_subcuenta({{ $psub->id }})">Editar</button>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+
                             @endforeach
 
                         @endforeach
-
-
-
-                    @endforeach
 
                     
                     
@@ -134,5 +210,108 @@
         </div>
         <br>
         <br>
+        {{-- MODAL --}}
+            <div wire:ignore.self class="modal fade" id="editarModalCuenta"  tabindex="-1" role="dialog"
+            aria-labelledby="editarModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editarModalLabel">Editando</h5>
+                            <button type="button" class="close"data-bs-dismiss="modal"  aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="edit_valor1">Valor</label>
+                                    <br>
+                                    <input type="numeric" class="form-control" id="edit_valor1"  wire:model="edit_valor1" >
+                                    @error('edit_valor1') <span class="mt-1 error">{{ $message }}</span> @enderror
+                                </div>
+                                <br>
+                                
+                                
+                                {{-- <div class="form-group">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                        </div> --}}
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" wire:click="save_edit_cuenta()">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {{-- MODAL --}}
+            <div wire:ignore.self class="modal fade" id="editarModalSubcuenta"  tabindex="-1" role="dialog"
+            aria-labelledby="editarModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editarModalLabel">Editando</h5>
+                            <button type="button" class="close"data-bs-dismiss="modal"  aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                
+                                
+                                <div class="form-group">
+                                    <label for="cuentam">Valor</label>
+                                    <br>
+                                    <input type="numeric" class="form-control" id="edit_valor2"  wire:model="edit_valor2" >
+                                    @error('edit_valor2') <span class="mt-1 error">{{ $message }}</span> @enderror
+                                </div>
+                                <br>
+                                
+                                {{-- <div class="form-group">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                        </div> --}}
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" wire:click="save_edit_subcuenta()">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </body>
+    @if(Session::has('success'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Felicidades!',
+                    text: '{{ Session::get("success") }}'
+                })
+            </script>
+    @endif
 </div>
+<style>
+        .content-centrado {
+        background-color: #fafafa;
+        margin: 1rem;
+        padding: 1rem;
+        /* border: 2px solid #ccc; */
+        /* IMPORTANTE */
+        text-align: center;
+    }
+
+    .campo:last-child {
+        justify-content: flex-end;
+    }
+
+    .form-control {
+        color: black;
+    }
+    .error{
+        color: red;
+    }
+</style>

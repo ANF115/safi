@@ -35,7 +35,7 @@ class RegistroCuentas extends Component
         $this->cuentass= Cuenta::all();
         
         return view('livewire.cuentas.registro-cuentas',[
-            'cuentas' => Cuenta::where('nombre_cuenta', 'like', '%' . $this->search . '%')->paginate(5),
+            'cuentas' => Cuenta::where('nombre_cuenta', 'like', '%' . $this->search . '%')->paginate(50),
         ]);
     }
 

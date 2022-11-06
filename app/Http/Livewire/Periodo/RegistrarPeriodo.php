@@ -11,15 +11,18 @@ use Illuminate\Support\Facades\Auth;
 
 class RegistrarPeriodo extends Component
 {
-    public $year,$fecha_inicio,$fecha_fin,$catalogo_id;
-    public $codem,$catalogos;
+    public $year,$fecha_inicio,$fecha_fin,$catalogo_id,$search;
+    public $codem,$catalogos,$periodoss;
 
-
+    use WithPagination;
     public function render()
     {   
         $codem=Auth::user()->id;
         $this->catalogos = Catalogo::firstWhere('empresa_id',$codem);
-        return view('livewire.periodo.registrar-periodo');
+        $this->periodoss= Periodo::all()->where('catalogo_id',$this->catalogos->id);  
+        return view('livewire.periodo.registrar-periodo',[
+            'periodos' => Periodo::where('year', 'like', '%' . $this->search . '%')->paginate(5),
+        ]);
     }
 
     public function save_periodo()
