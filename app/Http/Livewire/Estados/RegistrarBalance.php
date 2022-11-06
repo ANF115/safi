@@ -21,7 +21,10 @@ class RegistrarBalance extends Component
     public $valor2,$subcuenta_id,$periodo_id_2;
     public $periodo_id_3,$cuenta_mayor_id;
     public $edit_valor1,$edit_valor2,$selectedCuenta,$selectedSubcuenta;
-    public $totalactivos,$totalpasivos,$totalcapital,$totalpasivopatrimonio;
+    public $totalactivosco,$totalactivosno,$totalactivos,$totalpasivosco,$totalpasivosno,$totalpasivos,$totalcapital,$totalpasivopatrimonio;
+    public $periodo_id_4;
+    public $arrayTotalActivosCos=[];
+    public $totalarray1;
 
     public function render()
     {
@@ -33,10 +36,35 @@ class RegistrarBalance extends Component
         $this->subcuentas= SubCuenta::all();
 
         
-        $this->periodos= Periodo::all()->where('catalogo_id',$this->catalogos->id);
+        $this->periodoss= Periodo::all()->where('catalogo_id',$this->catalogos->id);
         $this->periodos_CM= PeriodoCuentaM::all();
         $this->periodos_cuentas= PeriodoCuenta::all();
         $this->periodos_subcuentas= PeriodoSubCuenta::all();
+        
+        foreach( $this->periodoss as $prs ){
+            foreach( $this->periodos_cuentas as $pcs){
+                foreach($this->periodos_subcuentas as $psub){
+                    foreach($this->subcuentas as $subcuenta){
+                        if($prs->id == $psub->periodo_id && $prs->id == $pcs->periodo_id && $psub->subcuenta_id == $subcuenta->id){
+                                if($psub->subcuenta->cuenta->nombre_cuenta == 'ACTIVOS CORRIENTES'){
+                                    for($i=0; $i<sizeof($this->periodos_subcuentas);$i++){
+                                        if($prs->id ==$this->periodos_subcuentas[$i]->periodo_id && $this->periodos_subcuentas[$i]->subcuenta->cuenta_id == $subcuenta->cuenta->id){
+                                            $this->totalactivosco=(float)$this->periodos_subcuentas[$i]->valor;
+                                            
+                                            array_push($this->arrayTotalActivosCos,$this->totalactivosco);
+                                            array_sum($this->arrayTotalActivosCos);
+                                            $this->totalarray1=  array_sum($this->arrayTotalActivosCos);
+                                            
+                                        };
+                                    };
+                                };
+
+                               
+                        };
+                    };
+                };
+            };
+        };
 
 
         return view('livewire.estados.registrar-balance');

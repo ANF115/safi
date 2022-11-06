@@ -17,6 +17,23 @@
                 <h1>Balance General</h1>
                 <div class="col-sm">
                    
+                        <select class="form-select" aria-label="Default select example" id="periodo_id_4" wire:model="periodo_id_4">
+                            <option value="">Periodo</option>
+                                @foreach ($periodos as $per)
+                                    <option value="{{ $per->id }}">
+                                        {{ $per->year }}
+
+                            </option>
+                                    @endforeach
+                                
+                        </select>
+                        @error('periodo_id_4') <span class="mt-1 error">{{ $message }}</span> @enderror
+                </div>
+            </div>
+            <br>
+            <div class="row g-3">
+                <div class="col-sm">
+                   
                         <select class="form-select" aria-label="Default select example" id="periodo_id_3" wire:model="periodo_id_3">
                             <option value="">Periodo</option>
                                 @foreach ($periodos as $per)
@@ -152,43 +169,48 @@
 
                 <tbody>
                  
-                
-                        @foreach ($periodos_CM as $pcm)
-                            <tr>
-                                    <td><b>{{$pcm->cuenta_mayor->nombre_cuenta_mayor}}</b></td>
-                                    <td></td>
-                                    <td></td>
-                            </tr>
-                            @foreach ($periodos_cuentas as $pcuenta)
+                        @foreach ($periodoss as $prs)
+                            @foreach ($periodos_CM as $pcm)
                                 <tr>
-                                    
-                                    @if($pcm->cuenta_mayor_id == $pcuenta->cuenta->cuenta_mayor_id)
-                                        <td>{{$pcuenta->cuenta->nombre_cuenta}}</td>
-                                        <td>{{$pcuenta->valor}}</td>
-                                        <td>
-                                        <button type="button" class="btn btn-primary" id="btn-editar"
-                                            data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
-                                            wire:click="edit_cuenta({{ $pcuenta->id }})">Editar</button>
-                                       
+                                    @if($prs->id == $pcm->periodo_id)
+                                        <td><b>{{$pcm->cuenta_mayor->nombre_cuenta_mayor}}</b></td>
+                                        <td></td>
+                                        <td></td>
                                     @endif
                                 </tr>
-                                @foreach ($periodos_subcuentas as  $psub)
+                                
+                                @foreach ($periodos_cuentas as $pcuenta)
                                     <tr>
-                                        @if($pcm->cuenta_mayor_id == $pcuenta->cuenta->cuenta_mayor_id && $pcuenta->cuenta->id == $psub->subcuenta->cuenta_id)
-                                            <td>{{$psub->subcuenta->nombre_subcuenta}}</td>
-                                            <td>{{$psub->valor}}</td>
+                                        
+                                        @if($pcm->cuenta_mayor_id == $pcuenta->cuenta->cuenta_mayor_id && $prs->id == $pcuenta->periodo_id && $prs->id == $pcm->periodo_id)
+                                            <td>{{$pcuenta->cuenta->nombre_cuenta}}</td>
+                                            <td>{{$pcuenta->valor}}</td>
                                             <td>
                                             <button type="button" class="btn btn-primary" id="btn-editar"
-                                                data-bs-toggle="modal" data-bs-target="#editarModalSubcuenta"
-                                                wire:click="edit_subcuenta({{ $psub->id }})">Editar</button>
+                                                data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
+                                                wire:click="edit_cuenta({{ $pcuenta->id }})">Editar</button>
                                             </td>
                                         @endif
                                     </tr>
+                                    @foreach ($periodos_subcuentas as  $psub)
+                                        <tr>
+                                            @if($pcm->cuenta_mayor_id == $pcuenta->cuenta->cuenta_mayor_id && $pcuenta->cuenta->id == $psub->subcuenta->cuenta_id && $prs->id == $psub->periodo_id && $prs->id == $pcm->periodo_id )
+                                                <td>{{$psub->subcuenta->nombre_subcuenta}}</td>
+                                                <td>{{$psub->valor}}</td>
+                                                <td>
+                                                <button type="button" class="btn btn-primary" id="btn-editar"
+                                                    data-bs-toggle="modal" data-bs-target="#editarModalSubcuenta"
+                                                    wire:click="edit_subcuenta({{ $psub->id }})">Editar</button>
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+
                                 @endforeach
 
                             @endforeach
-
                         @endforeach
+                        
 
                     
                     
