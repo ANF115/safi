@@ -60,6 +60,6 @@ class AnalisisRatios extends Component
     //Ratios de Actividad
     //Método para calcular la razón de rotación de CXC
     public function razonRotacionCxC(){
-
+        
     }
 }
