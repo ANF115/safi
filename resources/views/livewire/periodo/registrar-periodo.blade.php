@@ -34,6 +34,19 @@
                     @error('fecha_fin') <span class="mt-1 error">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-sm">
+                        <select class="form-select" aria-label="Default select example" wire:model="catalogo_id">
+                            <option value="">Catálogo</option>
+                                
+                                    <option value="{{ $catalogos->id }}">
+                                        {{ $catalogos->nombre_catalogo }}
+
+                                    </option>
+                                
+                        </select>
+                        @error('catalogo_id') <span class="mt-1 error">{{ $message }}</span> @enderror
+                </div>
+
+                <div class="col-sm">
                     <button type="button" class="btn btn-success "wire:click="save_periodo()">Guardar</button>
                 </div>
                 
