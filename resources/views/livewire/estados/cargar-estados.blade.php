@@ -81,7 +81,6 @@
     </div>
     @if(Session::has('success'))
     <script>
-                 console.log("Si funciona");
                  Swal.fire({
                      icon: 'success',
                      title: 'Felicidades!',

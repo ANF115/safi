@@ -46,15 +46,14 @@ class CargarEstados extends Component
             // Recuperando datos del archivo excel
             $estadosFinancierosSheets=Excel::toArray(new EstadosFinancierosImport(),$this->estadosFinancieros);
             $resultadosBalanceGeneral=$this->validarBalanceGeneral($estadosFinancierosSheets[0]);
-
             // Notificando al usuario si hay cuentas no válidas
             $cuentasNoValidas=$resultadosBalanceGeneral['cuentas_no_validas'];
             if(count($cuentasNoValidas)>0){
                 $errorMessage="Cuentas no válidas del balance general:";
                 foreach ($cuentasNoValidas as $cuentaNoValida) {
-                    $errorMessage.="\n".$cuentaNoValida[0];
+                    $errorMessage.="\\n".$cuentaNoValida[0];
                 }
-                $errorMessage.="\nModificar el Catálogo de Cuentas y Volver a Intentar.";
+                $errorMessage.="\\nModificar el Catálogo de Cuentas y Volver a Intentar.";
                 // dd($errorMessage);
                 return session()->flash("fail", $errorMessage);
             }
@@ -83,7 +82,7 @@ class CargarEstados extends Component
                         ];
                     $cuentasMayoresIDs[]=$cuentaMayor->id;
                     $this->contadorCuentasMayoresBalanceGeneral++;
-                    unset($rows[$indice]);
+                    array_splice($rows,$indice,1);
                 }
 
             }
@@ -100,7 +99,7 @@ class CargarEstados extends Component
                         ];
                     $cuentasIDs[]=$cuenta->id;
                     $this->contadorCuentasBalanceGeneral++;
-                    unset($rows[$indice]);
+                    array_splice($rows,$indice,1);
                 }
             }
             // Fase 3: Encontrar las subcuentas de las cuentas encontradas
@@ -115,7 +114,7 @@ class CargarEstados extends Component
                         'valor'=>$row[1]
                         ];
                     $this->contadorSubcuentasBalanceGeneral++;
-                    unset($rows[$indice]);
+                    array_splice($rows,$indice,1);
                 }
             }
             return['cuentasMayores'=>$cuentasMayores,
