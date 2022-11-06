@@ -15,13 +15,16 @@ class CargarEstados extends Component
  
     public $estadosFinancieros;
     public $periodo;
+    public $fecha_inicio,$fecha_fin;
  
     public function save()
     {
     
         $this->validate([
             'estadosFinancieros' => 'file|max:1024|mimes:xlsx', // 1MB Max
-            'periodo'=>'required'
+            'periodo'=>'required',
+            'fecha_inicio'=> 'required',
+            'fecha_fin'=> 'required',
         ]);
         $this->estadosFinancieros->store('public');
         try{
@@ -29,7 +32,10 @@ class CargarEstados extends Component
             $this->catalogo = Catalogo::firstWhere('empresa_id',Auth::user()->id);
             //recuperando el período seleccionado
             $periodoSeleccionado = Periodo::firstOrCreate([
-                'year' => $this->periodo
+                'year' => $this->periodo,
+                'fecha_inicio'=> $this->fecha_inicio,
+                'fecha_fin' => $this->fecha_fin
+                'catalogo_id' => $this->catalogo->catalogo_id
             ]);
             Excel::import(new EstadosFinancierosImport($this->catalogo,$periodoSeleccionado),$this->estadosFinancieros);
             return session()->flash("success", "Estados Financieros Registrados Correctamente");

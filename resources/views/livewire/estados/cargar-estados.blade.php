@@ -1,6 +1,5 @@
 <div class="container-md">
-
-    <head>
+<head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -27,8 +26,21 @@
         </a><br>
         <form wire:submit.prevent="save">
         <div class="input-group input-group-sm mb-3">
-            <input type="number" placeholder="Año" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            <input wire:model="periodo" type="number" placeholder="Año" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            @error('periodo') <div class="error" >{{ $message }}</div> @enderror
            
+        </div>
+        <div class="col-sm">
+            <label for="fecha_inicio">Fecha Inicio </label>
+            <input type="date" class="form-control" id="fecha_inicio" placeholder="Fecha Inicio"  wire:model="fecha_inicio">
+            <br>
+            @error('fecha_inicio') <span class="mt-1 error">{{ $message }}</span> @enderror
+        </div>
+        <div class="col-sm">
+            <label for="fecha_fin">Fecha Fin</label>
+            <input type="date" class="form-control" id="fecha_fin" placeholder="Fecha Fin" wire:model="fecha_fin">
+            <br>
+            @error('fecha_fin') <span class="mt-1 error">{{ $message }}</span> @enderror
         </div>
         <div class="mb-3">
             <label for="estadosFinancieros" class="form-label">Seleccionar Estados Financieros
@@ -65,22 +77,40 @@
         </div>
         </form>
     </div>
+    @if(Session::has('success'))
+    <script>
+                 console.log("Si funciona");
+                 Swal.fire({
+                     icon: 'success',
+                     title: 'Felicidades!',
+                     text: '{{ Session::get("success") }}'
+                 })
+             </script>
+         @endif
+         @if(Session::has('fail'))
+             <script>
+                 Swal.fire({
+                     icon: 'error',
+                     title: 'Algo salio mal!',
+                     text: '{{ Session::get("fail") }}'
+                 })
+             </script>
+         @endif
+         <style>
+         
+             /* .cargar-archivo {
+                 position: absolute;
+                 top: 0px;
+                 max-width: 100%;
+                 min-height: 10%;
+                 font-size: 50px;
+                 text-align: center;
+                 filter: alpha(opacity=0);
+                 opacity: 0;
+                 outline: none;
+                 background: rgb(255, 255, 255);
+                 cursor: inherit;
+                 display: block;
+             } */
+         </style>
 </div>
-</div>
-<style>
-
-    /* .cargar-archivo {
-        position: absolute;
-        top: 0px;
-        max-width: 100%;
-        min-height: 10%;
-        font-size: 50px;
-        text-align: center;
-        filter: alpha(opacity=0);
-        opacity: 0;
-        outline: none;
-        background: rgb(255, 255, 255);
-        cursor: inherit;
-        display: block;
-    } */
-</style>
