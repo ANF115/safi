@@ -16,6 +16,7 @@ class CargarEstados extends Component
     public $estadosFinancieros;
     public $periodo;
     public $fecha_inicio,$fecha_fin;
+    private $catalogo;
  
     public function save()
     {
@@ -34,8 +35,8 @@ class CargarEstados extends Component
             $periodoSeleccionado = Periodo::firstOrCreate([
                 'year' => $this->periodo,
                 'fecha_inicio'=> $this->fecha_inicio,
-                'fecha_fin' => $this->fecha_fin
-                'catalogo_id' => $this->catalogo->catalogo_id
+                'fecha_fin' => $this->fecha_fin,
+                'catalogo_id' => $this->catalogo->id
             ]);
             Excel::import(new EstadosFinancierosImport($this->catalogo,$periodoSeleccionado),$this->estadosFinancieros);
             return session()->flash("success", "Estados Financieros Registrados Correctamente");
