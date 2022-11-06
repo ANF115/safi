@@ -31,7 +31,13 @@ class BalanceGeneralImport implements ToCollection, WithCalculatedFormulas
                     $join->on('periodo_cuenta_m_s.cuenta_mayor_id','=','cuenta_mayors.id')
                     ->where('cuenta_mayors.nombre_cuenta_mayor', 'like','%'.$this->nombre_cuenta.'%');
                 })
-                ->get();
+                ->join('periodos', function($join){
+                    $join->on('periodo_cuenta_m_s.periodo_id','=','periodos.id')
+                    ->where('periodos.id', '=',$this->periodo->id);
+                })
+                ->first();
+            $periodoCuentaMayor->total=$this->valor;
+            $periodoCuentaMayor->save();
     
             dd($periodoCuentaMayor);
             // Encontrando la cuenta mayor
