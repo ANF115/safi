@@ -93,7 +93,7 @@
                  Swal.fire({
                      icon: 'error',
                      title: 'Algo salio mal!',
-                     text: '{{ Session::get("fail") }}'
+                     html: '{!! Session::get("fail") !!}'
                  })
              </script>
          @endif

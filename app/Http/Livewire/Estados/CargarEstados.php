@@ -49,11 +49,11 @@ class CargarEstados extends Component
             // Notificando al usuario si hay cuentas no válidas
             $cuentasNoValidas=$resultadosBalanceGeneral['cuentas_no_validas'];
             if(count($cuentasNoValidas)>0){
-                $errorMessage="Cuentas no válidas del balance general:";
+                $errorMessage="<p>Cuentas no válidas del balance general:</p>";
                 foreach ($cuentasNoValidas as $cuentaNoValida) {
-                    $errorMessage.="\\n".$cuentaNoValida[0];
+                    $errorMessage.="<p>".$cuentaNoValida[0]."</p>";
                 }
-                $errorMessage.="\\nModificar el Catálogo de Cuentas y Volver a Intentar.";
+                $errorMessage.="<p>Modificar el Catálogo de Cuentas y Volver a Intentar.</p>";
                 // dd($errorMessage);
                 return session()->flash("fail", $errorMessage);
             }
