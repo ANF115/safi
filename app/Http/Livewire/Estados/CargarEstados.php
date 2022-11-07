@@ -140,11 +140,11 @@ class CargarEstados extends Component
     
             }
             $rows = array_values($rows);
-            dd($rows);
-            // dd(['cuentasMayores'=>$cuentasMayores,
-            //         'cuentas'=>$cuentas,
-            //         'subcuentas'=>$subcuentas, 
-            //         'cuentas_no_validas'=>$rows]);
+
+            return(['cuentasMayores'=>$cuentasMayores,
+                    'cuentas'=>$cuentas,
+                    'subcuentas'=>$subcuentas, 
+                    'cuentas_no_validas'=>$rows]);
         
         }catch(QueryException $e){
             dd($e->getMessage());
