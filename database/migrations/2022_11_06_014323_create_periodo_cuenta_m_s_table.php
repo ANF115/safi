@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('cuenta_mayor_id');
             $table->unsignedBigInteger('periodo_id');
-            $table->decimal('total')->nullable();
+            $table->decimal('total', $precision = 20, $scale = 2)->nullable();
             $table->foreign('cuenta_mayor_id')->references('id')->on('cuenta_mayors');
             $table->foreign('periodo_id')->references('id')->on('periodos');
             $table->timestamps();
