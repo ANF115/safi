@@ -15,6 +15,23 @@
         <div class="container">
             <div class="row g-3">
                 <h1>Balance General</h1>
+                <!--<div class="col-sm">
+                   
+                        <select class="form-select" aria-label="Default select example" id="periodo_id_4" wire:model="periodo_id_4">
+                            <option value="">Periodo</option>
+                                @foreach ($periodos as $per)
+                                    <option value="{{ $per->id }}">
+                                        {{ $per->year }}
+
+                            </option>
+                                    @endforeach
+                                
+                        </select>
+                        @error('periodo_id_4') <span class="mt-1 error">{{ $message }}</span> @enderror
+                </div>-->
+            </div>
+            <br>
+            <div class="row g-3">
                 <div class="col-sm">
                    
                         <select class="form-select" aria-label="Default select example" id="periodo_id_3" wire:model="periodo_id_3">
@@ -144,7 +161,9 @@
                         
                         <th scope="col">Nombre Cuenta</th>
                         <th scope="col">$</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">Editar Valor</th>
+                        <th scope="col">Cosultar Total</th>
+
 
                     </tr>
                 </thead>
@@ -152,43 +171,98 @@
 
                 <tbody>
                  
-                
-                        @foreach ($periodos_CM as $pcm)
-                            <tr>
-                                    <td><b>{{$pcm->cuenta_mayor->nombre_cuenta_mayor}}</b></td>
-                                    <td></td>
-                                    <td></td>
-                            </tr>
-                            @foreach ($periodos_cuentas as $pcuenta)
+                        @foreach ($periodoss as $prs)
+                            @foreach ($periodos_CM as $pcm)
                                 <tr>
-                                    
-                                    @if($pcm->cuenta_mayor_id == $pcuenta->cuenta->cuenta_mayor_id)
-                                        <td>{{$pcuenta->cuenta->nombre_cuenta}}</td>
-                                        <td>{{$pcuenta->valor}}</td>
+                                    @if($prs->id == $pcm->periodo_id)
+                                        <td><b>{{$pcm->cuenta_mayor->nombre_cuenta_mayor}}</b></td>
+                                        <td></td>
                                         <td>
-                                        <button type="button" class="btn btn-primary" id="btn-editar"
-                                            data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
-                                            wire:click="edit_cuenta({{ $pcuenta->id }})">Editar</button>
-                                       
+                                                <button type="button" class="btn btn-primary" id="btn-editar"
+                                                data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
+                                                wire:click="edit_cuenta({{ $pcuenta->id }})">Total</button>
+                                        </td>
+                                        <td>
+                                            @if($pcm->cuenta_mayor->nombre_cuenta_mayor == 'ACTIVOS')
+                                            <label for="message-text" class="col-form-label">{{$totalactivos}}</label>
+                                            @endif
+                                            @if($pcm->cuenta_mayor->nombre_cuenta_mayor == 'PASIVOS')
+                                                <button type="button" class="btn btn-success" id="btn-editar"
+                                                data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
+                                                wire:click="total_pasivos()">Total</button>
+                                            @endif
+                                            @if($pcm->cuenta_mayor->nombre_cuenta_mayor == 'CAPITAL')
+                                                <button type="button" class="btn btn-success" id="btn-editar"
+                                                data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
+                                                wire:click="edit_cuenta({{ $pcuenta->id }})">Total</button>
+                                            @endif
+                                        </td>
                                     @endif
                                 </tr>
-                                @foreach ($periodos_subcuentas as  $psub)
+                                
+                                @foreach ($periodos_cuentas as $pcuenta)
                                     <tr>
-                                        @if($pcm->cuenta_mayor_id == $pcuenta->cuenta->cuenta_mayor_id && $pcuenta->cuenta->id == $psub->subcuenta->cuenta_id)
-                                            <td>{{$psub->subcuenta->nombre_subcuenta}}</td>
-                                            <td>{{$psub->valor}}</td>
+                                        
+                                        @if($pcm->cuenta_mayor_id == $pcuenta->cuenta->cuenta_mayor_id && $prs->id == $pcuenta->periodo_id && $prs->id == $pcm->periodo_id)
+                                            <td>{{$pcuenta->cuenta->nombre_cuenta}}</td>
+                                            <td>{{$pcuenta->valor}}</td>
                                             <td>
-                                            <button type="button" class="btn btn-primary" id="btn-editar"
-                                                data-bs-toggle="modal" data-bs-target="#editarModalSubcuenta"
-                                                wire:click="edit_subcuenta({{ $psub->id }})">Editar</button>
+                                                <button type="button" class="btn btn-primary" id="btn-editar"
+                                                    data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
+                                                    wire:click="edit_cuenta({{ $pcuenta->id }})">Editar</button>
                                             </td>
+                                            <td>
+                                                    @if($pcuenta->cuenta->nombre_cuenta == 'ACTIVOS CORRIENTES')
+
+                                                        <button type="button" class="btn btn-success" id="btn-editar"
+                                                        data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
+                                                        wire:click="total_activos_corrientes()">Total</button>
+
+                                                    @endif
+                                                    @if($pcuenta->cuenta->nombre_cuenta == 'ACTIVOS NO CORRIENTES')
+                                                        <button type="button" class="btn btn-success" id="btn-editar"
+                                                        data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
+                                                        wire:click="total_activos_noco()">Total</button>
+                                                    @endif
+
+                                                    @if($pcuenta->cuenta->nombre_cuenta == 'PASIVOS CORRIENTES')
+                                                        <button type="button" class="btn btn-success" id="btn-editar"
+                                                        data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
+                                                        wire:click="total_pasivos_corrientes()">Total</button>
+                                                    @endif
+                                                    @if($pcuenta->cuenta->nombre_cuenta == 'PASIVOS NO CORRIENTES')
+                                                        <button type="button" class="btn btn-success" id="btn-editar"
+                                                        data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
+                                                        wire:click="total_pasivos_corrientes()">Total</button>
+                                                    @endif
+                                                    
+                                            </td>
+
                                         @endif
                                     </tr>
+                                    @foreach ($periodos_subcuentas as  $psub)
+                                        <tr>
+                                            @if($pcm->cuenta_mayor_id == $pcuenta->cuenta->cuenta_mayor_id && $pcuenta->cuenta->id == $psub->subcuenta->cuenta_id && $prs->id == $psub->periodo_id && $prs->id == $pcm->periodo_id )
+                                                <td>{{$psub->subcuenta->nombre_subcuenta}}</td>
+                                                <td>{{$psub->valor}}</td>
+                                                <td>
+                                                <button type="button" class="btn btn-primary" id="btn-editar"
+                                                    data-bs-toggle="modal" data-bs-target="#editarModalSubcuenta"
+                                                    wire:click="edit_subcuenta({{ $psub->id }})">Editar</button>
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                
+                                            @endif
+                                        </tr>
+                                    @endforeach
+
                                 @endforeach
 
                             @endforeach
-
                         @endforeach
+                        
 
                     
                     
@@ -228,6 +302,42 @@
                                     <br>
                                     <input type="numeric" class="form-control" id="edit_valor1"  wire:model="edit_valor1" >
                                     @error('edit_valor1') <span class="mt-1 error">{{ $message }}</span> @enderror
+                                </div>
+                                <br>
+                                
+                                
+                                {{-- <div class="form-group">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                        </div> --}}
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" wire:click="save_edit_cuenta()">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- MODAL --}}
+            <div wire:ignore.self class="modal fade" id="totalModalCM"  tabindex="-1" role="dialog"
+            aria-labelledby="editarModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editarModalLabel">Total</h5>
+                            <button type="button" class="close"data-bs-dismiss="modal"  aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="totalcm">Valor</label>
+                                    <br>
+                                    <input type="numeric" class="form-control" id="totalcm">
+                                   
                                 </div>
                                 <br>
                                 

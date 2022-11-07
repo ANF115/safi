@@ -7,7 +7,7 @@ use App\Models\Cuenta;
 use App\Models\SubCuenta;
 use App\Models\Periodo;
 use App\Models\PeriodoCuenta;
-use App\Models\PeriodoSubCuenta;
+use App\Models\PeriodoSubcuenta;
 use App\Models\PeriodoCuentaM;
 use App\Models\CuentaMayor;
 use App\Models\Catalogo;
@@ -21,7 +21,11 @@ class RegistrarBalance extends Component
     public $valor2,$subcuenta_id,$periodo_id_2;
     public $periodo_id_3,$cuenta_mayor_id;
     public $edit_valor1,$edit_valor2,$selectedCuenta,$selectedSubcuenta;
-    public $totalactivos,$totalpasivos,$totalcapital,$totalpasivopatrimonio;
+    public $totalactivosco,$totalactivosno,$totalactivos,$totalpasivosco,$totalpasivosno,$totalpasivos,$totalcapital,$totalpasivopatrimonio;
+    public $periodo_id_4;
+    public $arrayTotalActivosCos=[],$arrayTotalActivosNo=[],$arrayTotalPasivosCo=[],$arrayTotalPasivosNo=[];
+    public $arrayTotalCapital=[];
+    public $totalarray1,$totalarray2,$totalarray3,$totalarray4,$totalarray5;
 
     public function render()
     {
@@ -33,12 +37,19 @@ class RegistrarBalance extends Component
         $this->subcuentas= SubCuenta::all();
 
         
-        $this->periodos= Periodo::all()->where('catalogo_id',$this->catalogos->id);
+        $this->periodoss= Periodo::all()->where('catalogo_id',$this->catalogos->id);
         $this->periodos_CM= PeriodoCuentaM::all();
         $this->periodos_cuentas= PeriodoCuenta::all();
-        $this->periodos_subcuentas= PeriodoSubCuenta::all();
+        $this->periodos_subcuentas= PeriodoSubcuenta::all();
+        
+       /* $this->total_activos_corrientes();
+        $this->total_activos_noco();
+        $this->totalactivos= $this->total_activos_corrientes() +$this->total_activos_noco();
 
+       dd($this->totalactivos);*/
 
+       dd($this->total_activos_noco());
+        
         return view('livewire.estados.registrar-balance');
     }
 
@@ -112,7 +123,7 @@ class RegistrarBalance extends Component
         
     ]);
        
-        $newVal = PeriodoSubCuenta::create([
+        $newVal = PeriodoSubcuenta::create([
             'subcuenta_id'=> $this->subcuenta_id,
             'periodo_id'=> $this->periodo_id_2,
             'valor'=> $this->valor2,
@@ -165,8 +176,8 @@ class RegistrarBalance extends Component
     {
         //dd($value);
         $this->clear_edit_subcuenta();
-        $this->selectedSubcuenta=PeriodoSubCuenta::find($value);
-        $this->edit_valor2 = PeriodoSubCuenta::find($value)->valor;
+        $this->selectedSubcuenta=PeriodoSubcuenta::find($value);
+        $this->edit_valor2 = PeriodoSubcuenta::find($value)->valor;
         
         //dd($this->editname);
 
@@ -189,6 +200,174 @@ class RegistrarBalance extends Component
     {
         $this->edit_valor2 = '';
     }
+
+    
+    public function total_activos_corrientes(){
+        foreach( $this->periodoss as $prs ){
+            foreach( $this->periodos_CM as $pcm){
+                foreach($this->cuentas as $cuenta){
+                    foreach( $this->periodos_cuentas as $pcs){
+                        foreach($this->periodos_subcuentas as $psub){
+                            foreach($this->subcuentas as $subcuenta){
+                                if($prs->id == $psub->periodo_id && $prs->id == $pcs->periodo_id && $psub->subcuenta_id == $subcuenta->id){
+                                        if($psub->subcuenta->cuenta->nombre_cuenta == 'ACTIVOS CORRIENTES'){
+                                            for($i=0; $i<sizeof($this->periodos_subcuentas);$i++){
+                                                if($prs->id ==$this->periodos_subcuentas[$i]->periodo_id && $this->periodos_subcuentas[$i]->subcuenta->cuenta_id == $subcuenta->cuenta->id){
+                                                    $this->totalactivosco=(float)$this->periodos_subcuentas[$i]->valor;
+                                                    
+                                                    array_push($this->arrayTotalActivosCos,$this->totalactivosco);
+                                                    array_sum($this->arrayTotalActivosCos);
+                                                    $this->totalarray1=  array_sum($this->arrayTotalActivosCos);
+                                                   
+                                                 
+                                                   
+                                                };
+                                               
+                                            };
+                                          
+                                            return  $this->totalarray1;
+                                        };
+                                    };
+                            };
+                        };
+                    };
+                };
+            };
+        };
+       
+        
+    }
+
+    public function total_activos_noco(){
+    
+        foreach( $this->periodoss as $prs ){
+            foreach( $this->periodos_CM as $pcm){
+                foreach($this->cuentas as $cuenta){
+                    foreach( $this->periodos_cuentas as $pcs){
+                        foreach($this->periodos_subcuentas as $psub){
+                            foreach($this->subcuentas as $subcuenta){
+                                if($prs->id == $psub->periodo_id && $prs->id == $pcs->periodo_id && $psub->subcuenta_id == $subcuenta->id){
+                                        if($psub->subcuenta->cuenta->nombre_cuenta == 'ACTIVOS NO CORRIENTES '){
+                                            for($i=0; $i<sizeof($this->periodos_subcuentas);$i++){
+                                                if($prs->id ==$this->periodos_subcuentas[$i]->periodo_id && $this->periodos_subcuentas[$i]->subcuenta->cuenta_id == $subcuenta->cuenta->id){
+                                                    $this->totalactivosno=(float)$this->periodos_subcuentas[$i]->valor;
+                                                    
+                                                    array_push($this->arrayTotalActivosNo,$this->totalactivosno);
+                                                    array_sum($this->arrayTotalActivosNo);
+                                                    $this->totalarray2= array_sum($this->arrayTotalActivosNo);
+                                                
+                                                };
+                                                return  $this->totalarray2;
+                                            };
+                                            /*dd($this->totalarray2);*/
+                                           
+                                        };
+                                    };
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        
+    }
+
+    public function total_pasivos_corrientes(){
+        foreach( $this->periodoss as $prs ){
+            foreach( $this->periodos_CM as $pcm){
+                foreach($this->cuentas as $cuenta){
+                    foreach( $this->periodos_cuentas as $pcs){
+                        foreach($this->periodos_subcuentas as $psub){
+                            foreach($this->subcuentas as $subcuenta){
+                                if($prs->id == $psub->periodo_id && $prs->id == $pcs->periodo_id && $psub->subcuenta_id == $subcuenta->id){
+                                        if($psub->subcuenta->cuenta->nombre_cuenta == 'PASIVOS CORRIENTES'){
+                                            for($i=0; $i<sizeof($this->periodos_subcuentas);$i++){
+                                                if($prs->id ==$this->periodos_subcuentas[$i]->periodo_id && $this->periodos_subcuentas[$i]->subcuenta->cuenta_id == $subcuenta->cuenta->id){
+                                                    $this->totalpasivosco=(float)$this->periodos_subcuentas[$i]->valor;
+                                                    
+                                                    array_push($this->arrayTotalPasivosCo,$this->totalpasivosco);
+                                                    array_sum($this->arrayTotalPasivosCo);
+                                                    $this->totalarray3= array_sum($this->arrayTotalPasivosCo);
+                                                    
+                                                };
+                                            };
+                                            /* dd($this->totalarray3);*/
+                                            return  $this->totalarray3;
+                                        };
+                                    };
+                            };
+                        };
+                    };
+                };
+            };
+        };
+
+    }
+
+    public function total_pasivos_noco(){
+        foreach( $this->periodoss as $prs ){
+            foreach( $this->periodos_CM as $pcm){
+                foreach($this->cuentas as $cuenta){
+                    foreach( $this->periodos_cuentas as $pcs){
+                        foreach($this->periodos_subcuentas as $psub){
+                            foreach($this->subcuentas as $subcuenta){
+                                if($prs->id == $psub->periodo_id && $prs->id == $pcs->periodo_id && $psub->subcuenta_id == $subcuenta->id){
+                                        if($psub->subcuenta->cuenta->nombre_cuenta == 'PASIVOS NO CORRIENTES'){
+                                            for($i=0; $i<sizeof($this->periodos_subcuentas);$i++){
+                                                if($prs->id ==$this->periodos_subcuentas[$i]->periodo_id && $this->periodos_subcuentas[$i]->subcuenta->cuenta_id == $subcuenta->cuenta->id){
+                                                    $this->totalpasivosno=(float)$this->periodos_subcuentas[$i]->valor;
+                                                    
+                                                    array_push($this->arrayTotalPasivosNo,$this->totalpasivosno);
+                                                    array_sum($this->arrayTotalPasivosNo);
+                                                    $this->totalarray4= array_sum($this->arrayTotalPasivosNo);
+                                                
+                                                };
+                                            };
+                                            /* dd($this->totalarray4);*/
+                                            return  $this->totalarray4;
+                                            
+                                        };
+                                    };
+                            };
+                        };
+                    };
+                };
+            };
+        };
+
+    }
+
+    public function total_capital(){
+        foreach( $this->periodoss as $prs ){
+            foreach( $this->periodos_CM as $pcm){
+                foreach($this->cuentas as $cuenta){
+                    foreach( $this->periodos_cuentas as $pcs){
+                        foreach($this->periodos_subcuentas as $psub){
+                            foreach($this->subcuentas as $subcuenta){
+                                if($prs->id == $psub->periodo_id && $prs->id == $pcs->periodo_id && $psub->subcuenta_id == $subcuenta->id){
+                                        if($pcm->cuenta_mayor->nombre_cuenta_mayor == 'CAPITAL'){
+                                            for($i=0; $i<sizeof($this->periodos_cuentas);$i++){
+                                                if($prs->id ==$this->periodos_cuentas[$i]->periodo_id && $this->periodos_cuentas[$i]->cuenta_id==$this->periodos_cuentas[$i]-> cuenta->id){
+                                                    $this->totalcapital=(float)$this->periodos_cuentas[$i]->valor;
+                                                    array_push($this->arrayTotalCapital,$this->totalcapital);
+                                                    array_sum($this->arrayTotalCapital);
+                                                    $this->totalarray5= array_sum($this->arrayTotalCapital);
+                                                }; 
+                                            }; 
+                                            /* dd($this->totalarray5);*/
+                                            return  $this->totalarray5;
+                                        };
+                                    };
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    }
+
+   
+   
 
 
 

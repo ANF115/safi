@@ -14,7 +14,8 @@ class AnalisisRatios extends Component
 {
     //Definiendo variables
     public $codEmpresa, $periodoSelect=[], $categoriasSelect=[],$nombre, $ratio,$ratios=[],
-           $nombreCategorias=[],$categorias,$nombreCat,$periodos,$yearPeriodos=[],$year;
+           $nombreCategorias=[],$categorias,$nombreCat,$periodos,$yearPeriodos=[],$year,
+           $ventasNetas, $inventarioProm,$inventarios=[],$rotacionInventarios=[],$costoVentas=[];
 
     public function render()
     {
@@ -45,7 +46,7 @@ class AnalisisRatios extends Component
                 //Obteniendo datos de categoria
                 $this->nombreCat=$this->categorias[$c];
                 array_push($this->nombreCategorias,$this->nombreCat);
-                //Consultando datos de las categorias
+                //Consultando datos de los ratios
                 $this->ratio= Ratio::where('categoria_id',$this->categoriasSelect[$i])->get();
                 for($r=0;$r<sizeof($this->ratio);$r++){
                     $this->nombre=$this->ratio[$r];
@@ -54,6 +55,42 @@ class AnalisisRatios extends Component
             }
             
         }
+        $this->rotacionDeInventarios();
+        
         // dd($this->categoriasSelect, $this->ratios);
+    }
+    //Ratios de Actividad
+    //Método para calcular la razón de rotación de inventarios
+    public function rotacionDeInventarios(){
+        $cuentas=DB::table('sub_cuentas')
+        // ->join('identificacion_sub_cuentas', 'sub_cuentas.id', '=', 'identificacion_sub_cuentas.subcuenta_id')
+        // ->join('periodo_subcuentas', 'sub_cuentas.id', '=', 'periodo_subcuentas.subcuenta_id')
+        ->join('identificacion_sub_cuentas', function($join){
+        $join->on('identificacion_sub_cuentas.subcuenta_id','=','sub_cuentas.id')
+        ->whereIn('identificacion_sub_cuentas.calculo_subcuenta_id', [2,4]);
+        })
+        ->join('periodo_subcuentas', function($join){
+        $join->on('periodo_subcuentas.subcuenta_id','=','sub_cuentas.id')
+        ->whereIn('periodo_subcuentas.periodo_id', $this->periodoSelect);
+        })
+        ->select('identificacion_sub_cuentas.calculo_subcuenta_id', 'periodo_subcuentas.valor','sub_cuentas.id','periodo_subcuentas.periodo_id')
+        ->get();
+        for($i=0;$i<sizeof($cuentas);$i++){
+            
+            if($cuentas[$i]->calculo_subcuenta_id==2){
+                $inventario=(float)$cuentas[$i]->valor;
+                array_push($this->inventarios,$inventario);
+                $this->inventarioProm=array_sum($this->inventarios)/count($this->inventarios);
+            }
+            if($cuentas[$i]->calculo_subcuenta_id==4){
+                $costoVenta=(float)$cuentas[$i]->valor;
+                array_push($this->costoVentas,$costoVenta);
+                for($c=0;$c<sizeof($this->costoVentas);$c++){
+                    $rotacionInventario=$this->costoVentas[$c]/$this->inventarioProm;
+                    array_push($this->rotacionInventarios,$rotacionInventario);
+                };
+            }
+        }
+        // dd($this->inventarioProm);
     }
 }
