@@ -92,7 +92,7 @@
              <script>
                  Swal.fire({
                      icon: 'error',
-                     title: 'Algo salio mal!',
+                     title: 'Cuentas No Existen en el Catálogo de Cuentas!',
                      html: '{!! Session::get("fail") !!}'
                  })
              </script>
