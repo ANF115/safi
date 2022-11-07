@@ -19,23 +19,23 @@ class RubroSeeder extends Seeder
     public function run()
     {
         DB::table('rubros')->insert([
-            'name' => 'Rubro 1',            
+            'name' => 'Restaurantes de comida rápida',            
         ]);
 
         DB::table('rubros')->insert([
-            'name' => 'Rubro 2',            
+            'name' => 'Tecnología',            
         ]);
 
         DB::table('rubros')->insert([
-            'name' => 'Rubro 3',            
+            'name' => 'Hoteles',            
         ]);
 
         DB::table('rubros')->insert([
-            'name' => 'Rubro 4',            
+            'name' => 'Servicios Varios',            
         ]);
 
         DB::table('rubros')->insert([
-            'name' => 'Rubro 5',            
+            'name' => 'Minería',            
         ]);
     }
 }

@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\{Cuenta, SubCuenta, CuentaMayor, Catalogo, Periodo};
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 class CargarEstados extends Component
 {
     use WithFileUploads;
@@ -80,12 +81,13 @@ class CargarEstados extends Component
             return session()->flash("fail", $e->getMessage());
         }
     }
-    private function validarBalanceGeneral(Array $rows){
+    private function validarBalanceGeneral(Array $datos){
         $cuentasMayores=array();
         $cuentasMayoresIDs=array();
         $cuentas=array();
         $cuentasIDs=array();
         $subcuentas=array();
+        $rows=$datos;
         try{
             // FASE 1: Encontrar la cuentas mayores
             foreach ($rows as $indice => $row){
@@ -94,16 +96,17 @@ class CargarEstados extends Component
                 ->first();
                 if($cuentaMayor){
                     $cuentasMayores[]=[
-                        'cuenta_mayor_id'=>$cuentaMayor->id, 
+                        'cuenta_mayor_id'=>$cuentaMayor->nombre_cuenta_mayor, 
                         'periodo_id'=>$this->periodoSeleccionado->id,
                         'total'=>$row[1]
                         ];
                     $cuentasMayoresIDs[]=$cuentaMayor->id;
                     $this->contadorCuentasMayoresBalanceGeneral++;
-                    array_splice($rows,$indice,1);
+                    unset($rows[$indice]);
                 }
-
+                
             }
+            $rows = array_values($rows);
             // Fase 2: Encontrar las cuentas de las cuentas mayores encontradas
             foreach($rows as $indice => $row){
                 $cuenta=Cuenta::whereIn('cuenta_mayor_id',$cuentasMayoresIDs)
@@ -111,15 +114,16 @@ class CargarEstados extends Component
                 ->first();
                 if($cuenta){
                     $cuentas[]=[
-                        'cuenta_id'=>$cuenta->id, 
+                        'cuenta_id'=>$cuenta->nombre_cuenta, 
                         'periodo_id'=>$this->periodoSeleccionado->id,
                         'valor'=>$row[1]
                         ];
                     $cuentasIDs[]=$cuenta->id;
                     $this->contadorCuentasBalanceGeneral++;
-                    array_splice($rows,$indice,1);
+                    unset($rows[$indice]);
                 }
             }
+            $rows = array_values($rows);
             // Fase 3: Encontrar las subcuentas de las cuentas encontradas
             foreach($rows as $indice => $row){
                 $subcuenta=SubCuenta::whereIn('cuenta_id',$cuentasIDs)
@@ -127,18 +131,21 @@ class CargarEstados extends Component
                 ->first();
                 if($subcuenta){
                     $subcuentas[]=[
-                        'subcuenta_id'=>$subcuenta->id, 
+                        'subcuenta_id'=>$subcuenta->nombre_subcuenta, 
                         'periodo_id'=>$this->periodoSeleccionado->id,
                         'valor'=>$row[1]
                         ];
                     $this->contadorSubcuentasBalanceGeneral++;
-                    array_splice($rows,$indice,1);
+                    unset($rows[$indice]);
                 }
+    
             }
-            return['cuentasMayores'=>$cuentasMayores,
+            $rows = array_values($rows);
+
+            return(['cuentasMayores'=>$cuentasMayores,
                     'cuentas'=>$cuentas,
                     'subcuentas'=>$subcuentas, 
-                    'cuentas_no_validas'=>$rows];
+                    'cuentas_no_validas'=>$rows]);
         
         }catch(QueryException $e){
             dd($e->getMessage());
@@ -151,42 +158,15 @@ class CargarEstados extends Component
         $cuentasIDs=array();
         $subcuentas=array();
         try{
-            // FASE 1: Encontrar la cuentas mayores
-            foreach ($rows as $indice => $row){
-                $cuentaMayor=CuentaMayor::where('catalogo_id','=',$this->catalogo->id)
-                ->where('nombre_cuenta_mayor','ilike','%'.$row[1].'%')
-                ->first();
-                if($cuentaMayor){
-                    $cuentasMayores[]=[
-                        'cuenta_mayor_id'=>$cuentaMayor->id, 
-                        'periodo_id'=>$this->periodoSeleccionado->id,
-                        'total'=>$row[2]
-                        ];
-                    $cuentasMayoresIDs[]=$cuentaMayor->id;
-                    $this->contadorCuentasMayoresEstadoResultados++;
-                    array_splice($rows,$indice,1);
-                }
-
-            }
-            // Fase 2: Encontrar las cuentas de las cuentas mayores encontradas
-            foreach($rows as $indice => $row){
-                $cuenta=Cuenta::whereIn('cuenta_mayor_id',$cuentasMayoresIDs)
-                ->where('nombre_cuenta','ilike','%'.$row[1].'%')
-                ->first();
-                if($cuenta){
-                    $cuentas[]=[
-                        'cuenta_id'=>$cuenta->id, 
-                        'periodo_id'=>$this->periodoSeleccionado->id,
-                        'valor'=>$row[2]
-                        ];
-                    $cuentasIDs[]=$cuenta->id;
-                    $this->contadorCuentasEstadoResultados++;
-                    array_splice($rows,$indice,1);
-                }
-            }
             // Fase 3: Encontrar las subcuentas de las cuentas encontradas
             foreach($rows as $indice => $row){
-                $subcuenta=SubCuenta::whereIn('cuenta_id',$cuentasIDs)
+                $subcuenta=DB::table('sub_cuentas')
+                ->join('cuentas', 'sub_cuentas.cuenta_id', 'cuentas.id')
+                ->join('cuenta_mayors','cuentas.cuenta_mayor_id','cuenta_mayors.id')
+                ->join('catalogos', function ($join){
+                    $join->on('cuenta_mayors.catalogo_id', '=', 'catalogos.id')
+                    ->where('catalogos.id','=',$this->catalogo->id);
+                })
                 ->where('nombre_subcuenta','ilike','%'.$row[1].'%')
                 ->first();
                 if($subcuenta){
@@ -196,12 +176,11 @@ class CargarEstados extends Component
                         'valor'=>$row[2]
                         ];
                     $this->contadorSubcuentasEstadoResultados++;
-                    array_splice($rows,$indice,1);
+                    unset($rows[$indice]);
                 }
             }
-            return['cuentasMayores'=>$cuentasMayores,
-                    'cuentas'=>$cuentas,
-                    'subcuentas'=>$subcuentas, 
+            $rows = array_values($rows);
+            return['subcuentas'=>$subcuentas, 
                     'cuentas_no_validas'=>$rows];
         
         }catch(QueryException $e){
