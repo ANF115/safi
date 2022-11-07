@@ -55,11 +55,26 @@ class AnalisisRatios extends Component
             }
             
         }
+        $this->razonRotacionCxC();
         // dd($this->categoriasSelect, $this->ratios);
     }
     //Ratios de Actividad
     //Método para calcular la razón de rotación de CXC
-    public function razonRotacionCxC(){
-        
+    public function rotacionDeInventarios(){
+        $periodoCuentaMayor=DB::table('sub_cuentas')
+        // ->join('identificacion_sub_cuentas', 'sub_cuentas.id', '=', 'identificacion_sub_cuentas.subcuenta_id')
+        // ->join('periodo_subcuentas', 'sub_cuentas.id', '=', 'periodo_subcuentas.subcuenta_id')
+        ->join('identificacion_sub_cuentas', function($join){
+        $join->on('identificacion_sub_cuentas.subcuenta_id','=','sub_cuentas.id')
+        ->whereIn('identificacion_sub_cuentas.calculo_subcuenta_id', [2,4]);
+        })
+        ->join('periodo_subcuentas', function($join){
+        $join->on('periodo_subcuentas.subcuenta_id','=','sub_cuentas.id')
+        ->whereIn('periodo_subcuentas.periodo_id', $this->periodoSelect);
+        })
+        ->select('identificacion_sub_cuentas.calculo_subcuenta_id', 'periodo_subcuentas.valor','sub_cuentas.id','periodo_subcuentas.periodo_id')
+        ->get();
+
+        dd($periodoCuentaMayor);
     }
 }
