@@ -108,18 +108,13 @@ class RegistrarBalance extends Component
 
                                         if($pcm->cuenta_mayor->nombre_cuenta_mayor == 'CAPITAL'){
                                             for($i=0; $i<sizeof($this->periodos_cuentas);$i++){
-                                                if($prs->id ==$this->periodos_cuentas[$i]->periodo_id && $this->periodos_cuentas[$i]->cuenta->cuenta_mayor_id == $cuenta->cuenta_mayor->id){
+                                                if($prs->id ==$this->periodos_cuentas[$i]->periodo_id && $this->periodos_cuentas[$i]->cuenta_id==$this->periodos_cuentas[$i]-> cuenta->id){
                                                     $this->totalcapital=(float)$this->periodos_cuentas[$i]->valor;
-                                                    
                                                     array_push($this->arrayTotalCapital,$this->totalcapital);
                                                     array_sum($this->arrayTotalCapital);
                                                     $this->totalarray5= array_sum($this->arrayTotalCapital);
-                                                   dd( $this->totalcapital);
                                                 }; 
-                                                
-                                                
                                             }; 
-                                            
                                         };
                                         
                                     
