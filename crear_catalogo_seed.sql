@@ -165,3 +165,9 @@ INSERT INTO public.cuenta_mayors(
          INSERT INTO public.sub_cuentas(
             id, cuenta_id, codigo_subcuenta, nombre_subcuenta)
             VALUES (3034,3007,'5', 'Utilidad Antes de impuesto y reserva legal');
+INSERT INTO public.identificacion_sub_cuentas(
+id, subcuenta_id, calculo_subcuenta_id)
+VALUES (1,3007, 2);
+INSERT INTO public.identificacion_sub_cuentas(
+id, subcuenta_id, calculo_subcuenta_id)
+VALUES (2,3025, 4);
