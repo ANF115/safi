@@ -162,7 +162,7 @@
                         <th scope="col">Nombre Cuenta</th>
                         <th scope="col">$</th>
                         <th scope="col">Editar Valor</th>
-                        <th scope="col">Cosultar Total</th>
+                       
 
 
                     </tr>
@@ -182,21 +182,17 @@
                                                 data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
                                                 wire:click="edit_cuenta({{ $pcuenta->id }})">Total</button>
                                         </td>
-                                        <td>
+                                        <!--<td>
                                             @if($pcm->cuenta_mayor->nombre_cuenta_mayor == 'ACTIVOS')
-                                            <label for="message-text" class="col-form-label">{{$totalactivos}}</label>
+                                            
                                             @endif
                                             @if($pcm->cuenta_mayor->nombre_cuenta_mayor == 'PASIVOS')
-                                                <button type="button" class="btn btn-success" id="btn-editar"
-                                                data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
-                                                wire:click="total_pasivos()">Total</button>
+                                            <label for="message-text" class="col-form-label">{{$totalpasivos}}</label>
                                             @endif
                                             @if($pcm->cuenta_mayor->nombre_cuenta_mayor == 'CAPITAL')
-                                                <button type="button" class="btn btn-success" id="btn-editar"
-                                                data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
-                                                wire:click="edit_cuenta({{ $pcuenta->id }})">Total</button>
+                                                
                                             @endif
-                                        </td>
+                                        </td>-->
                                     @endif
                                 </tr>
                                 
@@ -211,7 +207,7 @@
                                                     data-bs-toggle="modal" data-bs-target="#editarModalCuenta"
                                                     wire:click="edit_cuenta({{ $pcuenta->id }})">Editar</button>
                                             </td>
-                                            <td>
+                                           <!-- <td>
                                                     @if($pcuenta->cuenta->nombre_cuenta == 'ACTIVOS CORRIENTES')
 
                                                         <button type="button" class="btn btn-success" id="btn-editar"
@@ -236,7 +232,7 @@
                                                         wire:click="total_pasivos_corrientes()">Total</button>
                                                     @endif
                                                     
-                                            </td>
+                                            </td>-->
 
                                         @endif
                                     </tr>
@@ -250,9 +246,7 @@
                                                     data-bs-toggle="modal" data-bs-target="#editarModalSubcuenta"
                                                     wire:click="edit_subcuenta({{ $psub->id }})">Editar</button>
                                                 </td>
-                                                <td>
-
-                                                </td>
+                                                
                                                 
                                             @endif
                                         </tr>

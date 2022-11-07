@@ -48,7 +48,13 @@ class RegistrarBalance extends Component
 
        dd($this->totalactivos);*/
 
-       dd($this->total_activos_noco());
+        $this->total_pasivos_corrientes();
+        $this->total_pasivos_noco();
+        $this->totalpasivos= ($this->total_pasivos_corrientes() + $this->total_pasivos_noco());
+        
+        
+
+      
         
         return view('livewire.estados.registrar-balance');
     }
@@ -255,12 +261,12 @@ class RegistrarBalance extends Component
                                                     array_push($this->arrayTotalActivosNo,$this->totalactivosno);
                                                     array_sum($this->arrayTotalActivosNo);
                                                     $this->totalarray2= array_sum($this->arrayTotalActivosNo);
-                                                
+                                                    
                                                 };
-                                                return  $this->totalarray2;
+                                                
                                             };
                                             /*dd($this->totalarray2);*/
-                                           
+                                            return  $this->totalarray2;
                                         };
                                     };
                             };
