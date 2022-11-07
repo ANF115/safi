@@ -51,6 +51,8 @@
             "@php artisan key:generate --ansi"
         ],
         "post-install-cmd": [
+            "npm install",
+            "npm run build",
             "@php artisan optimize"
         ]
     },
