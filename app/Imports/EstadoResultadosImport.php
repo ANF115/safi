@@ -3,11 +3,11 @@
 namespace App\Imports;
 
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\ToArray;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 
-class EstadoResultadosImport implements ToCollection, WithCalculatedFormulas
+class EstadoResultadosImport implements ToArray, WithCalculatedFormulas
 {
-
+    public function array(array $row){}
     public function collection(Collection $rows){}
 }

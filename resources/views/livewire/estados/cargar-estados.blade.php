@@ -51,52 +51,32 @@
             <div wire:loading wire:target="estadosFinancieros" class="valid-feedback fs-4">Cargando...</div>
             @error('estadosFinancieros') <div class="error" >{{ $message }}</div> @enderror
         </div>
-        <!-- <div class="card border-primary" style="border-style:dashed;" onclick="$('#cargarEstadosFinancieros').click()">
-            <div class="card-body">
-                <div class="container text-center"> -->
-                    <!-- <label for="cargarEstadosFinancieros">
-                        <div class="row justify-content-md-center">
-                            <div class="col col-lg-2">
-                                <span style="font-size:40px; margin-top:8px" class="material-symbols-outlined">
-                                    cloud_upload
-                                </span>
-                            </div>
-                            <div class="col-md-auto d-flex align-items-center">
-                                <span id="mensajeCargarArchivo">Seleccione los estados financieros</span>
-                                <input type="file" wire:model="estadosFinancieros" accept=".xlsx" style="display:none" id="cargarEstadosFinancieros">
-                                <div wire:loading wire:target="estadosFinancieros">Cargando...</div>
-                                @error('estadosFinancieros') <span class="error">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
-                    </label> -->
-                <!-- </div>
-            </div>
-        </div>  -->
         <div class="row justify-content-end">
+ 
             <div class="col-2">
-                <button type="submit" class="btn btn-success">Guardar</button>
+                <button  type="submit" class="btn btn-success">Guardar</button>
             </div>
         </div>
         </form>
     </div>
-    @if(Session::has('success'))
+    @if(session()->has('success'))
     <script>
                  Swal.fire({
                      icon: 'success',
                      title: 'Felicidades!',
-                     text: '{{ Session::get("success") }}'
+                     text: '{{ session("success") }}'
                  })
              </script>
          @endif
-         @if(Session::has('fail'))
-             <script>
-                 Swal.fire({
-                     icon: 'error',
-                     title: 'Cuentas No Existen en el Catálogo de Cuentas!',
-                     html: '{!! Session::get("fail") !!}'
-                 })
-             </script>
-         @endif
+    @if(session()->has('fail'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Algunas cuentas no se guardaron correctamente.<br/>',
+                html: '{!! session("fail") !!}'
+            })
+        </script>
+    @endif
          <style>
          
              /* .cargar-archivo {

@@ -7,7 +7,7 @@ use Livewire\WithFileUploads;
 use App\Imports\EstadosFinancierosImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
-use App\Models\{Cuenta, SubCuenta, CuentaMayor, Catalogo, Periodo};
+use App\Models\{Cuenta, SubCuenta, CuentaMayor, Catalogo, Periodo,PeriodoCuentaM,PeriodoCuenta,PeriodoSubcuenta};
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 class CargarEstados extends Component
@@ -26,11 +26,10 @@ class CargarEstados extends Component
     private $contadorCuentasMayoresEstadoResultados;
     private $contadorCuentasEstadoResultados;
     private $contadorSubcuentasEstadoResultados;
+    // continen las cuentas a ser guardadas
+    private $cuentasMayores, $cuentas, $subcuentas;
   
- 
-    public function save()
-    {
-    
+    public function validar(){
         $this->validate([
             'estadosFinancieros' => 'file|max:1024|mimes:xlsx', // 1MB Max
             'periodo'=>'required',
@@ -38,6 +37,8 @@ class CargarEstados extends Component
             'fecha_fin'=> 'required',
         ]);
         $this->estadosFinancieros->store('public');
+        $errorMessage="";
+        
         try{
             //recuperando el catálogo de la empresa
             $this->catalogo = Catalogo::firstWhere('empresa_id',Auth::user()->id);
@@ -57,8 +58,13 @@ class CargarEstados extends Component
             $cuentasNoValidasBalanceGeneral=$resultadosBalanceGeneral['cuentas_no_validas'];
             $cuentasNoValidasEstadoResultados=$resultadosEstadoResultados['cuentas_no_validas'];
             
+            // Recuperando las cuentas que serán almacenadas
+            $this->cuentasMayores=$resultadosBalanceGeneral['cuentasMayores'];
+            $this->cuentas=$resultadosBalanceGeneral['cuentas'];
+            $this->subcuentas=array_merge($resultadosBalanceGeneral['subcuentas'],$resultadosEstadoResultados['subcuentas']);
+
+            //mostrando mensajes de validación
             if(count($cuentasNoValidasBalanceGeneral)>0 or count($cuentasNoValidasEstadoResultados)>0){
-                $errorMessage="";
                 if(count($cuentasNoValidasBalanceGeneral)>0){
                     $errorMessage.="<h3>Balance General:</h3>";
                     foreach ($cuentasNoValidasBalanceGeneral as $cuentaNoValida) {
@@ -72,14 +78,41 @@ class CargarEstados extends Component
                     }
                 }
                 $errorMessage.="<h3>Modificar el Catálogo de Cuentas y Volver a Intentar.</h3>";
-                return session()->flash("fail", $errorMessage);
-            }else{
-                // return session()->flash("success", "Estados Financieros Registrados Correctamente");
-                return session()->flash("success", "A guardar!");
             }
+            return $errorMessage;
         }catch(\Maatwebsite\Excel\Validators\ValidationException $e){
-            return session()->flash("fail", $e->getMessage());
+            // return session()->flash("fail", $e->getMessage());
+            $errorMessage.="<h3>".$e->getMessage()."</h3>";
         }
+    }
+    public function save()
+    {
+        
+        $errores=$this->validar();
+        foreach($this->cuentasMayores as $currentCuentaMayor){
+            PeriodoCuentaM::updateOrCreate(
+                $currentCuentaMayor['filtro'],
+                $currentCuentaMayor['update']
+            );
+        }
+        foreach($this->cuentas as $currentCuenta){
+            PeriodoCuenta::updateOrCreate(
+                $currentCuenta['filtro'],
+                $currentCuenta['update']
+            );
+        }
+        foreach($this->subcuentas as $currentSubcuenta){
+            PeriodoSubcuenta::updateOrCreate(
+                $currentSubcuenta['filtro'],
+                $currentSubcuenta['update']
+            );
+        }
+        if(strlen($errores)>0){
+            session()->flash("fail", $errores);
+        }else{
+            session()->flash("success", "Estados Financieros Registrados Correctamente");
+        }
+        
     }
     private function validarBalanceGeneral(Array $datos){
         $cuentasMayores=array();
@@ -94,11 +127,15 @@ class CargarEstados extends Component
                 $cuentaMayor=CuentaMayor::where('catalogo_id','=',$this->catalogo->id)
                 ->where('nombre_cuenta_mayor','ilike','%'.$row[0].'%')
                 ->first();
-                if($cuentaMayor){
+                if($cuentaMayor and $row[1]!=null){
                     $cuentasMayores[]=[
-                        'cuenta_mayor_id'=>$cuentaMayor->nombre_cuenta_mayor, 
-                        'periodo_id'=>$this->periodoSeleccionado->id,
-                        'total'=>$row[1]
+                            'filtro'=>[
+                                'cuenta_mayor_id'=>$cuentaMayor->id, 
+                                'periodo_id'=>$this->periodoSeleccionado->id
+                            ],
+                            'update'=>[
+                                'total'=>$row[1]
+                            ]
                         ];
                     $cuentasMayoresIDs[]=$cuentaMayor->id;
                     $this->contadorCuentasMayoresBalanceGeneral++;
@@ -112,11 +149,15 @@ class CargarEstados extends Component
                 $cuenta=Cuenta::whereIn('cuenta_mayor_id',$cuentasMayoresIDs)
                 ->where('nombre_cuenta','ilike','%'.$row[0].'%')
                 ->first();
-                if($cuenta){
+                if($cuenta and $row[1]!=null){
                     $cuentas[]=[
-                        'cuenta_id'=>$cuenta->nombre_cuenta, 
-                        'periodo_id'=>$this->periodoSeleccionado->id,
-                        'valor'=>$row[1]
+                            'filtro'=>[
+                                'cuenta_id'=>$cuenta->id, 
+                                'periodo_id'=>$this->periodoSeleccionado->id
+                            ],
+                            'update'=>[
+                                'valor'=>$row[1]
+                            ]
                         ];
                     $cuentasIDs[]=$cuenta->id;
                     $this->contadorCuentasBalanceGeneral++;
@@ -129,11 +170,15 @@ class CargarEstados extends Component
                 $subcuenta=SubCuenta::whereIn('cuenta_id',$cuentasIDs)
                 ->where('nombre_subcuenta','ilike','%'.$row[0].'%')
                 ->first();
-                if($subcuenta){
+                if($subcuenta and $row[1]!=null){
                     $subcuentas[]=[
-                        'subcuenta_id'=>$subcuenta->nombre_subcuenta, 
-                        'periodo_id'=>$this->periodoSeleccionado->id,
-                        'valor'=>$row[1]
+                            'filtro'=>[
+                                'subcuenta_id'=>$subcuenta->id, 
+                                'periodo_id'=>$this->periodoSeleccionado->id
+                            ],
+                            'update'=>[
+                                'valor'=>$row[1]
+                            ]
                         ];
                     $this->contadorSubcuentasBalanceGeneral++;
                     unset($rows[$indice]);
@@ -152,10 +197,6 @@ class CargarEstados extends Component
         }
     }
     private function validarEstadoResultados(Array $rows){
-        $cuentasMayores=array();
-        $cuentasMayoresIDs=array();
-        $cuentas=array();
-        $cuentasIDs=array();
         $subcuentas=array();
         try{
             // Fase 3: Encontrar las subcuentas de las cuentas encontradas
@@ -169,11 +210,15 @@ class CargarEstados extends Component
                 })
                 ->where('nombre_subcuenta','ilike','%'.$row[1].'%')
                 ->first();
-                if($subcuenta){
+                if($subcuenta and $row[2]!=null){
                     $subcuentas[]=[
-                        'subcuenta_id'=>$subcuenta->id, 
-                        'periodo_id'=>$this->periodoSeleccionado->id,
-                        'valor'=>$row[2]
+                            'filtro'=>[
+                                'subcuenta_id'=>$subcuenta->id, 
+                                'periodo_id'=>$this->periodoSeleccionado->id
+                            ],
+                            'update'=>[
+                                'valor'=>$row[2]
+                            ]
                         ];
                     $this->contadorSubcuentasEstadoResultados++;
                     unset($rows[$indice]);
@@ -186,9 +231,6 @@ class CargarEstados extends Component
         }catch(QueryException $e){
             dd($e->getMessage());
         }
-    }
-    private function guardarBalanceGeneral(){
-
     }
 
     public function render()
