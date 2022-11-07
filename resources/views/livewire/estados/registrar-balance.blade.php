@@ -15,7 +15,7 @@
         <div class="container">
             <div class="row g-3">
                 <h1>Balance General</h1>
-                <div class="col-sm">
+                <!--<div class="col-sm">
                    
                         <select class="form-select" aria-label="Default select example" id="periodo_id_4" wire:model="periodo_id_4">
                             <option value="">Periodo</option>
@@ -28,7 +28,7 @@
                                 
                         </select>
                         @error('periodo_id_4') <span class="mt-1 error">{{ $message }}</span> @enderror
-                </div>
+                </div>-->
             </div>
             <br>
             <div class="row g-3">
