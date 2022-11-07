@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('subcuenta_id');
             $table->unsignedBigInteger('periodo_id');
-            $table->decimal('valor');
+            $table->decimal('valor', $precision = 20, $scale = 2);
             $table->foreign('subcuenta_id')->references('id')->on('sub_cuentas');
             $table->foreign('periodo_id')->references('id')->on('periodos');
             $table->timestamps();

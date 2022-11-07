@@ -81,7 +81,6 @@
     </div>
     @if(Session::has('success'))
     <script>
-                 console.log("Si funciona");
                  Swal.fire({
                      icon: 'success',
                      title: 'Felicidades!',
@@ -93,8 +92,8 @@
              <script>
                  Swal.fire({
                      icon: 'error',
-                     title: 'Algo salio mal!',
-                     text: '{{ Session::get("fail") }}'
+                     title: 'Cuentas No Existen en el Catálogo de Cuentas!',
+                     html: '{!! Session::get("fail") !!}'
                  })
              </script>
          @endif
