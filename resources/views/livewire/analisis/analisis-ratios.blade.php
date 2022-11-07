@@ -80,6 +80,11 @@
                                     <tr>
                                         <td>{{ $ratio->nombre_ratio }}</td>
                                         @foreach($yearPeriodos as $year)
+                                            @if($ratio->nombre_ratio =='Razón rotación de inventarios')
+                                                @foreach ($rotacionInventarios as $rotacion)
+                                                    <td>{{$rotacion}}{{ $ratio->unidad }}</td>
+                                                @endforeach
+                                            @endif
                                             <td>{{ $ratio->unidad }}</td>
                                         @endforeach
                                     </tr>

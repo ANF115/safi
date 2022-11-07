@@ -15,7 +15,7 @@ class AnalisisRatios extends Component
     //Definiendo variables
     public $codEmpresa, $periodoSelect=[], $categoriasSelect=[],$nombre, $ratio,$ratios=[],
            $nombreCategorias=[],$categorias,$nombreCat,$periodos,$yearPeriodos=[],$year,
-           $ventasNetas, $promCxCComerciales, $valorPeriodoIn, $valorPeriodoFin;
+           $ventasNetas, $inventarioProm,$inventarios=[],$rotacionInventarios=[],$costoVentas=[];
 
     public function render()
     {
@@ -55,13 +55,14 @@ class AnalisisRatios extends Component
             }
             
         }
-        $this->razonRotacionCxC();
+        $this->rotacionDeInventarios();
+        
         // dd($this->categoriasSelect, $this->ratios);
     }
     //Ratios de Actividad
-    //Método para calcular la razón de rotación de CXC
+    //Método para calcular la razón de rotación de inventarios
     public function rotacionDeInventarios(){
-        $periodoCuentaMayor=DB::table('sub_cuentas')
+        $cuentas=DB::table('sub_cuentas')
         // ->join('identificacion_sub_cuentas', 'sub_cuentas.id', '=', 'identificacion_sub_cuentas.subcuenta_id')
         // ->join('periodo_subcuentas', 'sub_cuentas.id', '=', 'periodo_subcuentas.subcuenta_id')
         ->join('identificacion_sub_cuentas', function($join){
@@ -74,7 +75,22 @@ class AnalisisRatios extends Component
         })
         ->select('identificacion_sub_cuentas.calculo_subcuenta_id', 'periodo_subcuentas.valor','sub_cuentas.id','periodo_subcuentas.periodo_id')
         ->get();
-
-        dd($periodoCuentaMayor);
+        for($i=0;$i<sizeof($cuentas);$i++){
+            
+            if($cuentas[$i]->calculo_subcuenta_id==2){
+                $inventario=(float)$cuentas[$i]->valor;
+                array_push($this->inventarios,$inventario);
+                $this->inventarioProm=array_sum($this->inventarios)/count($this->inventarios);
+            }
+            if($cuentas[$i]->calculo_subcuenta_id==4){
+                $costoVenta=(float)$cuentas[$i]->valor;
+                array_push($this->costoVentas,$costoVenta);
+                for($c=0;$c<sizeof($this->costoVentas);$c++){
+                    $rotacionInventario=$this->costoVentas[$c]/$this->inventarioProm;
+                    array_push($this->rotacionInventarios,$rotacionInventario);
+                };
+            }
+        }
+        // dd($this->inventarioProm);
     }
 }
