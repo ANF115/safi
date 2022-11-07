@@ -65,7 +65,7 @@ class CargarEstados extends Component
                     }
                 }
                 if(count($cuentasNoValidasEstadoResultados)>0){
-                    $errorMessage.="<h3>Estado de Resultados:</h3>";
+                    $errorMessage.="<br/><h3>Estado de Resultados:</h3>";
                     foreach ($cuentasNoValidasEstadoResultados as $cuentaNoValida) {
                         $errorMessage.="<br/>".$cuentaNoValida[1];
                     }
